@@ -1,12 +1,11 @@
 {
   "profiles": {
-    "Grpc.Serivce.Data": {
+    "GrpcService1": {
       "commandName": "Project",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "nativeDebugging": false,
-      "applicationUrl": "http://localhost:5000"
+      "applicationUrl": "https://localhost:5001"
     },
     "Docker": {
       "commandName": "Docker",

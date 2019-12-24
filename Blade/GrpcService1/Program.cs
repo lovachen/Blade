@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace Grpc.Serivce.Data
+namespace GrpcService1
 {
     public class Program
     {
@@ -20,7 +20,7 @@ namespace Grpc.Serivce.Data
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
-                { 
+                {
                     webBuilder.UseStartup<Startup>();
                 });
     }

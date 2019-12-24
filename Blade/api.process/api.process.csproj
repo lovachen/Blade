@@ -6,8 +6,9 @@
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
   <ItemGroup>
-    <Protobuf Include="..\Grpc.Serivce.Data\Protos\*.proto" GrpcServices="Service" />
+    <Protobuf Include="..\grpc.user\Protos\*.proto" GrpcServices="Service" />
   </ItemGroup>
+  
   <ItemGroup>
     <PackageReference Include="Consul" Version="0.7.2.6" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.26.0" />
