@@ -17,6 +17,11 @@
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.10" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.0" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\Blade.Provider.Consul\Blade.Provider.Consul.csproj" />
+    <ProjectReference Include="..\Blade\Blade.csproj" />
+  </ItemGroup>
 
 
 </Project>

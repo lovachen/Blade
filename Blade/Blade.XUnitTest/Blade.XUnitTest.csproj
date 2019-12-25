@@ -20,5 +20,11 @@
     <PackageReference Include="Grpc.AspNetCore" Version="2.26.0" />
 
   </ItemGroup>
+  
+  
+  <ItemGroup>
+    <ProjectReference Include="..\Blade.Provider.Consul\Blade.Provider.Consul.csproj" />
+    <ProjectReference Include="..\Blade\Blade.csproj" />
+  </ItemGroup>
 
 </Project>

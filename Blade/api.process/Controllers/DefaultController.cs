@@ -30,7 +30,7 @@ namespace api.process.Controllers
 
             AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
             //var channel = GrpcChannel.ForAddress("http://192.168.0.121:7001/", new GrpcChannelOptions { HttpClient = httpClient });
-            var channel = GrpcChannel.ForAddress("http://192.168.0.121:7001/");
+            var channel = GrpcChannel.ForAddress("http://192.168.0.105:7001/");
 
             var greeterClient = new Greeter.GreeterClient(channel);
             var res = greeterClient.SayHello(new HelloRequest()
