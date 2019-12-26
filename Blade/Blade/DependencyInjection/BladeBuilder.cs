@@ -3,17 +3,15 @@ using Blade.Configuration.File;
 using Blade.Grpc;
 using Blade.Infrastructure;
 using Blade.LoadBalancer;
-using Blade.ServiceDiscovery;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace Blade.DependencyInjection
 {
+    using Blade.ServiceDiscovery;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.DependencyInjection.Extensions;
+    using System;
+
     public class BladeBuilder : IBladeBuilder
     {
         public IServiceCollection Services { get; }
@@ -22,6 +20,8 @@ namespace Blade.DependencyInjection
 
         public BladeBuilder(IServiceCollection services, IConfiguration configurationRoot)
         {
+            AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+
             Configuration = configurationRoot;
             Services = services; 
             Services.Configure<FileConfiguration>(configurationRoot);
@@ -34,10 +34,14 @@ namespace Blade.DependencyInjection
             Services.TryAddSingleton<IBladeGrpcFactory, BladeGrpcFactory>();
             Services.TryAddSingleton<IDownstreamKeyCreator, DownstreamKeyCreator>();
             Services.TryAddSingleton<IServiceProviderConfigurationCreator, ServiceProviderConfigurationCreator>();
+            Services.TryAddSingleton<ILoadBalancerFactory, LoadBalancerFactory>();
+            services.TryAddSingleton<IDownstreamProviderCreate, DownstreamProviderCreate>();
+
             Services.AddMemoryCache();
 
         }
 
+        
 
     }
 }

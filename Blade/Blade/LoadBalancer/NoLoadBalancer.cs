@@ -3,6 +3,7 @@ using Blade.Configuration.File;
 using Blade.Values;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,14 +19,28 @@ namespace Blade.LoadBalancer
             _services = services;
         }
 
-        public Task<ServiceHostAndPort> Lease(ServiceProviderConfiguration config)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="config"></param>
+        /// <returns></returns>
+        public async Task<ServiceHostAndPort> Lease(ServiceProviderConfiguration config)
         {
-            throw new NotImplementedException();
+            if (_services.Count == 0)
+                throw new Exception($"NoLoadBalancer 构建时 List<Service> 不存在值");
+
+            var service = await Task.FromResult(_services.FirstOrDefault());
+
+            return service.HostAndPort;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="hostAndPort"></param>
         public void Release(ServiceHostAndPort hostAndPort)
         {
-            throw new NotImplementedException();
+
         }
     }
 }

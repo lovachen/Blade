@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Http;
+using System.Linq;
 
 namespace Blade.Grpc
 {
@@ -23,6 +25,7 @@ namespace Blade.Grpc
         private readonly ConcurrentDictionary<string, GrpcChannel> _grpcChannels;
 
         private IServiceProvider _serviceProvider;
+        private IHttpContextAccessor _httpContextAccessor;
         private IDownstreamProviderCreate _downstreamProviderCreate;
         private FileConfiguration _fileConfiguration;
         private ILoadBalancerHouse _loadBalancerHouse;
@@ -32,6 +35,7 @@ namespace Blade.Grpc
             IOptionsMonitor<FileConfiguration> optionsMonitor,
             ILoadBalancerHouse loadBalancerHouse,
             IServiceProvider serviceProvider,
+            IHttpContextAccessor httpContextAccessor,
             IServiceProviderConfigurationCreator serviceProviderConfigurationCreator)
         {
             _serviceProvider = serviceProvider;
@@ -39,6 +43,7 @@ namespace Blade.Grpc
             _serviceProviderConfigurationCreator = serviceProviderConfigurationCreator;
             _loadBalancerHouse = loadBalancerHouse;
             _fileConfiguration = optionsMonitor.CurrentValue;
+            _httpContextAccessor = httpContextAccessor;
             _grpcChannels = new ConcurrentDictionary<string, GrpcChannel>();
         }
 
@@ -72,41 +77,38 @@ namespace Blade.Grpc
 
         private async Task<GrpcChannel> Build(string serviceName)
         {
-            GrpcChannel channel;
             var downstream = _downstreamProviderCreate.Create(_fileConfiguration, serviceName);
             var serviceProvider = _serviceProviderConfigurationCreator.Create(_fileConfiguration.GlobalConfiguration);
             var file = _fileConfiguration.GlobalConfiguration.ServiceDiscoveryProvider;
-
             var loadBalancer = await _loadBalancerHouse.Get(downstream, serviceProvider);
             var hostAndPort = await loadBalancer.Lease(serviceProvider);
-            var key = CreateKey(hostAndPort, serviceName);
-            if (_grpcChannels.TryGetValue(key, out var _channel))
-            {
-                channel = _grpcChannels[key];
-            }
-            else
-            { 
-                channel = CreateChannel(hostAndPort);
-                _grpcChannels[key] = channel;
-            }
+            var channel = CreateChannel(hostAndPort);
+            UpdateItems(loadBalancer, hostAndPort);
             return channel;
-        }
-         
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="loadBalancer"></param>
-        /// <returns></returns>
-        private string CreateKey(ServiceHostAndPort hostAndPort, string serviceName)
-        {
-            return $"{serviceName}|{hostAndPort.DownstreamHost}:{hostAndPort.DownstreamPort}";
         }
 
         private GrpcChannel CreateChannel(ServiceHostAndPort hostAndPort)
         {
-           return GrpcChannel.ForAddress($"http://{hostAndPort.DownstreamHost}:{hostAndPort.DownstreamPort}");
+            return GrpcChannel.ForAddress($"http://{hostAndPort.DownstreamHost}:{hostAndPort.DownstreamPort}");
         }
+
+        private void UpdateItems(ILoadBalancer loadBalancer, ServiceHostAndPort hostAndPort)
+        {
+            if (_httpContextAccessor.HttpContext.Items.ContainsKey(ConstantValue.CHANNEL_ITEMS))
+            {
+               var items = _httpContextAccessor.HttpContext.Items[ConstantValue.CHANNEL_ITEMS] as List<ReleaseDelegate>;
+                items.Add(loadBalancer.Release);
+                
+            }
+            else
+            {
+
+            }
+        }
+
 
         #endregion
     }
+
+    public delegate void ReleaseDelegate(ServiceHostAndPort hostAndPort);
 }

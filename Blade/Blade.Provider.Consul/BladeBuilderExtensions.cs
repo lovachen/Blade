@@ -1,12 +1,10 @@
-﻿using Blade.DependencyInjection;
-using Blade.ServiceDiscovery;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Blade.Provider.Consul
+﻿namespace Blade.Provider.Consul
 {
+    using Blade.Provider.Consul;
+    using Blade.ServiceDiscovery;
+    using Blade.DependencyInjection;
+    using Microsoft.Extensions.DependencyInjection;
+
     public static class BladeBuilderExtensions
     {
         /// <summary>

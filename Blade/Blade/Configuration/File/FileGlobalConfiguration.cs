@@ -10,18 +10,25 @@ namespace Blade.Configuration.File
         {
             ServiceDiscoveryProvider = new FileServiceDiscoveryProvider();
             LoadBalancerOptions = new FileLoadBalancerOptions();
-            Providers = new List<DownstreamProvider>();
+            Downstream = new List<FileDownstreamOptions>();
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+
         public FileServiceDiscoveryProvider ServiceDiscoveryProvider { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public FileLoadBalancerOptions LoadBalancerOptions { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public List<DownstreamProvider> Providers { get; set; }
+        public List<FileDownstreamOptions> Downstream { get; set; }
 
     }
 }

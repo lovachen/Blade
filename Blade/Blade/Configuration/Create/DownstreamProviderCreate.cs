@@ -22,7 +22,7 @@ namespace Blade.Configuration.Create
         /// <returns></returns>
         public List<DownstreamProvider> Create(FileConfiguration config)
         {
-            return config.GlobalConfiguration.Providers
+            return config.GlobalConfiguration.Downstream
                  .Select(downstream =>
                  {
                      return Build(downstream, config.GlobalConfiguration);
@@ -37,9 +37,11 @@ namespace Blade.Configuration.Create
         /// <returns></returns>
         public DownstreamProvider Create(FileConfiguration config, string serviceName)
         {
-            var downstream = config.GlobalConfiguration.Providers.Where(o => o.ServiceName == serviceName).FirstOrDefault();
+            var downstream = config.GlobalConfiguration.Downstream.Where(o => o.ServiceName == serviceName).FirstOrDefault();
             if (downstream == null)
                 throw new Exception($"{nameof(downstream)} 构建错误，ServiceName：{serviceName}未找到");
+             
+
             return Build(downstream, config.GlobalConfiguration);
         }
 
@@ -48,7 +50,7 @@ namespace Blade.Configuration.Create
         /// </summary>
         /// <param name="config"></param>
         /// <returns></returns>
-        private DownstreamProvider Build(DownstreamProvider downstream, FileGlobalConfiguration configuration)
+        private DownstreamProvider Build(FileDownstreamOptions downstream, FileGlobalConfiguration configuration)
         {
             LoadBalancerOptions loadBalancer = downstream.LoadBalancerOptions;
             if (loadBalancer == null && configuration.LoadBalancerOptions != null)

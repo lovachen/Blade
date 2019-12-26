@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Blade.Grpc;
 using grpc.user;
 using Grpc.Net.Client;
 using Microsoft.AspNetCore.Http;
@@ -14,6 +15,12 @@ namespace api.process.Controllers
     [ApiController]
     public class DefaultController : ControllerBase
     {
+        private Blade.Grpc.IBladeGrpcFactory _bladeGrpcFactory;
+
+        public DefaultController(IBladeGrpcFactory bladeGrpcFactory)
+        {
+            _bladeGrpcFactory = bladeGrpcFactory;
+        }
 
         /// <summary>
         /// 
@@ -45,5 +52,19 @@ namespace api.process.Controllers
             return Ok(new { success = true, data = res, dta = res2 });
         }
 
+        [HttpGet("user")]
+        public IActionResult GetUser()
+        {
+           var channel = _bladeGrpcFactory.Create<User.UserClient>().Result;
+            var userClient = new User.UserClient(channel);
+            var res2 = userClient.GetUser(new UserRequest()
+            {
+                Id = "1"
+            });
+            System.Diagnostics.Debug.WriteLine("controller action结束");
+            return Ok(new { dta = res2 });
+        }
+
+         
     }
 }
