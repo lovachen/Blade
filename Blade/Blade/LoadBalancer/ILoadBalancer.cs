@@ -1,4 +1,5 @@
-﻿using Blade.Configuration.File;
+﻿using Blade.Configuration;
+using Blade.Configuration.File;
 using Blade.Values;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace Blade.LoadBalancer
         /// </summary>
         /// <param name="provider"></param>
         /// <returns></returns>
-        Task<ServiceHostAndPort> Lease(FileServiceDiscoveryProvider provider);
+        Task<ServiceHostAndPort> Lease(ServiceProviderConfiguration config);
 
         /// <summary>
         /// 

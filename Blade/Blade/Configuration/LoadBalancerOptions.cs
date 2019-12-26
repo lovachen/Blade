@@ -6,17 +6,15 @@ namespace Blade.Configuration
 {
     public class LoadBalancerOptions
     { 
-        public LoadBalancerOptions(string type, string key, int expiryInMs)
+        public LoadBalancerOptions(string type, string key)
         {
             Type = type;
-            Key = key;
-            ExpiryInMs = expiryInMs;
+            Key = key; 
         }
 
         public string Type { get; }
 
         public string Key { get; }
 
-        public int ExpiryInMs { get; }
     }
 }

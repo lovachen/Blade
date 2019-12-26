@@ -15,19 +15,38 @@ namespace Blade.Provider.Consul
         private bool _polling;
         private List<Service> _services;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pollingInterval"></param>
+        /// <param name="consulServiceDiscoveryProvider"></param>
         public PollConsul(int pollingInterval, IServiceDiscoveryProvider consulServiceDiscoveryProvider)
         {
-
-
+            _consulServiceDiscoveryProvider = consulServiceDiscoveryProvider;
+            _services = new List<Service>();
+            _timer = new Timer(async x =>
+              {
+                  if (_polling) return;
+                  _polling = true;
+                  await Poll();
+                  _polling = false;
+              }, null, pollingInterval, pollingInterval);
 
         }
         public void Dispose()
         {
-        } 
+            _timer?.Dispose();
+            _timer = null;
+        }
 
-        public Task<List<Service>> Get()
+        public Task<List<Service>> GetServices()
         {
-            throw new NotImplementedException();
+            return Task.FromResult(_services);
+        }
+
+        private async Task Poll()
+        {
+            _services = await _consulServiceDiscoveryProvider.GetServices();
         }
     }
 }

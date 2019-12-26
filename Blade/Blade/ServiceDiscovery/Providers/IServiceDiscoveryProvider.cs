@@ -15,6 +15,6 @@ namespace Blade.ServiceDiscovery.Providers
         /// 获取服务地址列表
         /// </summary>
         /// <returns></returns>
-        Task<List<Service>> Get();
+        Task<List<Service>> GetServices();
     }
 }

@@ -1,4 +1,5 @@
-﻿using Blade.Configuration.File;
+﻿using Blade.Configuration;
+using Blade.Configuration.File;
 using Blade.Values;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace Blade.LoadBalancer
             _services = services;
         }
 
-        public Task<ServiceHostAndPort> Lease(FileServiceDiscoveryProvider provider)
+        public Task<ServiceHostAndPort> Lease(ServiceProviderConfiguration config)
         {
             throw new NotImplementedException();
         }

@@ -30,7 +30,7 @@ namespace Blade.LoadBalancer
         { 
             var serviceProvider = _serviceProviderFactory.Get(config, downstream);
 
-            var services = await serviceProvider.Get();
+            var services = await serviceProvider.GetServices();
 
             switch (downstream.LoadBalancerOptions?.Type)
             {

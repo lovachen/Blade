@@ -7,6 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Blade.ServiceDiscovery
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class ServiceDiscoveryProviderFactory : IServiceDiscoveryProviderFactory
     {
         private readonly ServiceDiscoveryFinderDelegate _delegates;
@@ -29,7 +32,7 @@ namespace Blade.ServiceDiscovery
             return GetServiceDiscoveryProvider(serviceConfig, downstream);
         }
 
-
+        #region private
 
         private IServiceDiscoveryProvider GetServiceDiscoveryProvider(ServiceProviderConfiguration config, DownstreamProvider downstream)
         {
@@ -44,6 +47,6 @@ namespace Blade.ServiceDiscovery
             throw new Exception("ServiceDiscoveryProvider ：Type 配置错误");
         }
 
-
+        #endregion
     }
 }
