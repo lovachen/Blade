@@ -6,7 +6,7 @@ namespace Blade.Configuration.File
 {
     public class FileDownstreamOptions
     {
-        public LoadBalancerOptions LoadBalancerOptions { get; }
+        public FileLoadBalancerOptions LoadBalancerOptions { get; set; }
 
         public string ServiceName { get; set; }
     }

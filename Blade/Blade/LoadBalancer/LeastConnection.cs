@@ -15,8 +15,7 @@ namespace Blade.LoadBalancer
     public class LeastConnection : ILoadBalancer
     {
         private List<Service> _services;
-        private readonly List<Lease> _leases;
-        private readonly string _serviceName;
+        private readonly List<Lease> _leases; 
         private static readonly object _syncLock = new object();
 
 

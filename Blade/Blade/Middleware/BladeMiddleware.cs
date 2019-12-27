@@ -31,10 +31,10 @@ namespace Blade.Middleware
             {
                 if (context.Items.ContainsKey(ConstantValue.CHANNEL_ITEMS))
                 {
-                    var currents = context.Items[ConstantValue.CHANNEL_ITEMS] as List<ServiceHostAndPort>;
-                    foreach (var servicesHost in currents)
+                    var currents = context.Items[ConstantValue.CHANNEL_ITEMS] as Dictionary<string,LoadBalancerHttpItems>;
+                    foreach (var item in currents)
                     {
-
+                        item.Value.LoadBalancer.Release(item.Value.ServiceHostAndPort);
                     }
                 }
                 await Task.FromResult(0);

@@ -27,12 +27,12 @@ namespace Blade.Grpc
         private IServiceProvider _serviceProvider;
         private IHttpContextAccessor _httpContextAccessor;
         private IDownstreamProviderCreate _downstreamProviderCreate;
-        private FileConfiguration _fileConfiguration;
+        private IInternalConfigurationCreate _internalConfigurationCreate;
         private ILoadBalancerHouse _loadBalancerHouse;
         private IServiceProviderConfigurationCreator _serviceProviderConfigurationCreator;
 
         public BladeGrpcFactory(IDownstreamProviderCreate downstreamProviderCreate,
-            IOptionsMonitor<FileConfiguration> optionsMonitor,
+            IInternalConfigurationCreate internalConfigurationCreate,
             ILoadBalancerHouse loadBalancerHouse,
             IServiceProvider serviceProvider,
             IHttpContextAccessor httpContextAccessor,
@@ -42,7 +42,7 @@ namespace Blade.Grpc
             _downstreamProviderCreate = downstreamProviderCreate;
             _serviceProviderConfigurationCreator = serviceProviderConfigurationCreator;
             _loadBalancerHouse = loadBalancerHouse;
-            _fileConfiguration = optionsMonitor.CurrentValue;
+            _internalConfigurationCreate = internalConfigurationCreate;
             _httpContextAccessor = httpContextAccessor;
             _grpcChannels = new ConcurrentDictionary<string, GrpcChannel>();
         }
@@ -65,8 +65,7 @@ namespace Blade.Grpc
         public async Task<GrpcChannel> Create<T>() where T : ClientBase
         {
             GrpcProfile _grpcProfile = _serviceProvider.GetService<GrpcProfile>();
-
-            if (_grpcProfile.TryGetValue(nameof(T), out var serviceName))
+            if (_grpcProfile.TryGetValue(typeof(T).FullName, out var serviceName))
             {
                 return await Create(serviceName);
             }
@@ -77,6 +76,7 @@ namespace Blade.Grpc
 
         private async Task<GrpcChannel> Build(string serviceName)
         {
+            var _fileConfiguration = _internalConfigurationCreate.Get();
             var downstream = _downstreamProviderCreate.Create(_fileConfiguration, serviceName);
             var serviceProvider = _serviceProviderConfigurationCreator.Create(_fileConfiguration.GlobalConfiguration);
             var file = _fileConfiguration.GlobalConfiguration.ServiceDiscoveryProvider;
@@ -94,21 +94,30 @@ namespace Blade.Grpc
 
         private void UpdateItems(ILoadBalancer loadBalancer, ServiceHostAndPort hostAndPort)
         {
+            Dictionary<string, LoadBalancerHttpItems> dic;
+            string key = CreateKey(hostAndPort);
             if (_httpContextAccessor.HttpContext.Items.ContainsKey(ConstantValue.CHANNEL_ITEMS))
             {
-               var items = _httpContextAccessor.HttpContext.Items[ConstantValue.CHANNEL_ITEMS] as List<ReleaseDelegate>;
-                items.Add(loadBalancer.Release);
-                
+                dic = _httpContextAccessor.HttpContext.Items[ConstantValue.CHANNEL_ITEMS] as Dictionary<string, LoadBalancerHttpItems>;
             }
             else
             {
-
+                dic = new Dictionary<string, LoadBalancerHttpItems>();
+                _httpContextAccessor.HttpContext.Items[ConstantValue.CHANNEL_ITEMS] = dic;
             }
+            if (!dic.ContainsKey(key))
+            {
+                dic.Add(key, new LoadBalancerHttpItems(hostAndPort, loadBalancer));
+            }
+        }
+
+        private string CreateKey(ServiceHostAndPort hostAndPort)
+        {
+            return $"{hostAndPort.DownstreamHost}:{hostAndPort.DownstreamPort}";
         }
 
 
         #endregion
     }
 
-    public delegate void ReleaseDelegate(ServiceHostAndPort hostAndPort);
 }

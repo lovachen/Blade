@@ -18,7 +18,7 @@ namespace Blade.Grpc
 
         public GrpcProfile Add<T>(string serviceName)
         {
-            this.AddOrUpdate(nameof(T), serviceName, (k, v) => serviceName);
+            this.AddOrUpdate(typeof(T).FullName, serviceName, (k, v) => serviceName);
             return this;
         }
 

@@ -10,7 +10,7 @@ namespace Blade.Configuration.Create
         /// </summary>
         /// <param name="config"></param>
         /// <returns></returns>
-        List<DownstreamProvider> Create(FileConfiguration config);
+        List<DownstreamProvider> Create(InternalConfiguration config);
 
         /// <summary>
         /// 构建对象
@@ -18,6 +18,6 @@ namespace Blade.Configuration.Create
         /// <param name="config"></param>
         /// <param name="serviceName"></param>
         /// <returns></returns>
-        DownstreamProvider Create(FileConfiguration config, string serviceName);
+        DownstreamProvider Create(InternalConfiguration config, string serviceName);
     }
 }

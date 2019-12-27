@@ -36,6 +36,7 @@ namespace Blade.DependencyInjection
             Services.TryAddSingleton<IServiceProviderConfigurationCreator, ServiceProviderConfigurationCreator>();
             Services.TryAddSingleton<ILoadBalancerFactory, LoadBalancerFactory>();
             services.TryAddSingleton<IDownstreamProviderCreate, DownstreamProviderCreate>();
+            services.TryAddSingleton<IInternalConfigurationCreate, InternalConfigurationCreate>();
 
             Services.AddMemoryCache();
 

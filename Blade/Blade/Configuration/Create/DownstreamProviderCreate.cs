@@ -20,7 +20,7 @@ namespace Blade.Configuration.Create
         /// </summary>
         /// <param name="config"></param>
         /// <returns></returns>
-        public List<DownstreamProvider> Create(FileConfiguration config)
+        public List<DownstreamProvider> Create(InternalConfiguration config)
         {
             return config.GlobalConfiguration.Downstream
                  .Select(downstream =>
@@ -35,12 +35,12 @@ namespace Blade.Configuration.Create
         /// <param name="config"></param>
         /// <param name="serviceName"></param>
         /// <returns></returns>
-        public DownstreamProvider Create(FileConfiguration config, string serviceName)
+        public DownstreamProvider Create(InternalConfiguration config, string serviceName)
         {
             var downstream = config.GlobalConfiguration.Downstream.Where(o => o.ServiceName == serviceName).FirstOrDefault();
             if (downstream == null)
                 throw new Exception($"{nameof(downstream)} 构建错误，ServiceName：{serviceName}未找到");
-             
+
 
             return Build(downstream, config.GlobalConfiguration);
         }
@@ -52,10 +52,14 @@ namespace Blade.Configuration.Create
         /// <returns></returns>
         private DownstreamProvider Build(FileDownstreamOptions downstream, FileGlobalConfiguration configuration)
         {
-            LoadBalancerOptions loadBalancer = downstream.LoadBalancerOptions;
-            if (loadBalancer == null && configuration.LoadBalancerOptions != null)
+            LoadBalancerOptions loadBalancer;
+            if (downstream.LoadBalancerOptions == null)
+            { 
+                loadBalancer = new LoadBalancerOptions(configuration.LoadBalancerOptions?.Type, configuration.LoadBalancerOptions?.Key);
+            }
+            else
             {
-                loadBalancer = new LoadBalancerOptions(configuration.LoadBalancerOptions.Type, configuration.LoadBalancerOptions.Key);
+                loadBalancer = new LoadBalancerOptions(downstream.LoadBalancerOptions.Type, downstream.LoadBalancerOptions.Key);
             }
             string loadBalanceKey = _downstreamKeyCreator.Create(downstream);
             return new DownstreamProvider(downstream.ServiceName, loadBalanceKey, loadBalancer);
