@@ -43,7 +43,7 @@ namespace api.process
             }
             app.UseBlade();
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 

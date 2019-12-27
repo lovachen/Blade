@@ -1,13 +1,17 @@
 #See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
+#Depending on the operating system of the host machines(s) that will build or run the containers, the image specified in the FROM statement may need to be changed.
+#For more information, please see https://aka.ms/containercompat
+
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-nanoserver-1903 AS base
 WORKDIR /app
 EXPOSE 80
-EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-nanoserver-1903 AS build
 WORKDIR /src
 COPY ["api.process/api.process.csproj", "api.process/"]
+COPY ["Blade.Provider.Consul/Blade.Provider.Consul.csproj", "Blade.Provider.Consul/"]
+COPY ["Blade/Blade.csproj", "Blade/"]
 RUN dotnet restore "api.process/api.process.csproj"
 COPY . .
 WORKDIR "/src/api.process"
