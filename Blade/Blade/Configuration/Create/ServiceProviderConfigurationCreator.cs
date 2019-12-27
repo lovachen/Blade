@@ -23,13 +23,9 @@ namespace Blade.Configuration.Create
         {
             var port = globalConfiguration?.ServiceDiscoveryProvider?.Port ?? 0;
             var host = globalConfiguration?.ServiceDiscoveryProvider?.Host ?? "localhost";
-            var type = !string.IsNullOrEmpty(globalConfiguration?.ServiceDiscoveryProvider?.Type)
-                ? globalConfiguration?.ServiceDiscoveryProvider?.Type
-                : "consul";
-            var pollingInterval = globalConfiguration?.ServiceDiscoveryProvider?.PollingInterval ?? 0;
             var token = globalConfiguration?.ServiceDiscoveryProvider?.Token;
 
-            return new ServiceProviderConfiguration(type, host, port, token, pollingInterval);
+            return new ServiceProviderConfiguration(host, port, token);
         }
     }
 }

@@ -11,5 +11,7 @@ namespace Blade.Configuration.File
         public string Type { get; set; }
         public string Token { get; set; } 
         public int PollingInterval { get; set; } 
+        public bool Listening { get; set; }
+
     }
 }

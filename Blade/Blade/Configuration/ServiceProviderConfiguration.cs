@@ -9,25 +9,18 @@ namespace Blade.Configuration
     /// </summary>
     public class ServiceProviderConfiguration
     {
-        public ServiceProviderConfiguration(string type, string host, int port, string token, int pollingInterval)
+        public ServiceProviderConfiguration(string host, int port, string token)
         { 
             Host = host;
             Port = port; 
-            Token = token;
-            Type = type;
-            PollingInterval = pollingInterval; 
+            Token = token;  
         }
 
         public string Host { get; }
 
         public int Port { get; }
 
-        public string Type { get; }
-
         public string Token { get; }
-         
-
-        public int PollingInterval { get; }
          
     }
 }

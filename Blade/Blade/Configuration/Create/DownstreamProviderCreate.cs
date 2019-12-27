@@ -8,13 +8,7 @@ namespace Blade.Configuration.Create
 {
     public class DownstreamProviderCreate : IDownstreamProviderCreate
     {
-        private IDownstreamKeyCreator _downstreamKeyCreator;
-
-        public DownstreamProviderCreate(IDownstreamKeyCreator keyCreator)
-        {
-            _downstreamKeyCreator = keyCreator;
-        }
-
+      
         /// <summary>
         /// 
         /// </summary>
@@ -60,9 +54,8 @@ namespace Blade.Configuration.Create
             else
             {
                 loadBalancer = new LoadBalancerOptions(downstream.LoadBalancerOptions.Type, downstream.LoadBalancerOptions.Key);
-            }
-            string loadBalanceKey = _downstreamKeyCreator.Create(downstream);
-            return new DownstreamProvider(downstream.ServiceName, loadBalanceKey, loadBalancer);
+            } 
+            return new DownstreamProvider(downstream.ServiceName, loadBalancer);
         }
 
     }

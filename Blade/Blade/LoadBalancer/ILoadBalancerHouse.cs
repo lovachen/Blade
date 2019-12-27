@@ -15,5 +15,14 @@ namespace Blade.LoadBalancer
         /// <param name="config"></param>
         /// <returns></returns>
         Task<ILoadBalancer> Get(DownstreamProvider provider, ServiceProviderConfiguration config);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="downstream"></param>
+        /// <param name="config"></param>
+        /// <returns></returns>
+        Task Remove(DownstreamProvider downstream, ServiceProviderConfiguration config);
+
     }
 }

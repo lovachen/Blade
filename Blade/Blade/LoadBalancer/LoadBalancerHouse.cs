@@ -28,24 +28,40 @@ namespace Blade.LoadBalancer
         public async Task<ILoadBalancer> Get(DownstreamProvider downstream, ServiceProviderConfiguration config)
         {
             ILoadBalancer balancer;
-
-            if (_loadBalancers.TryGetValue(downstream.LoadBalancerKey, out var loadBalancer))
+            string key = CreateKey(downstream, config);
+            if (_loadBalancers.TryGetValue(key, out var loadBalancer))
             {
-                loadBalancer = _loadBalancers[downstream.LoadBalancerKey];
+                loadBalancer = _loadBalancers[key];
                 if (downstream.LoadBalancerOptions.Type != loadBalancer.GetType().Name)
                 {
                     loadBalancer = await _factory.Get(downstream, config);
                     balancer = loadBalancer;
-                    AddLoadBalancer(downstream.LoadBalancerKey, loadBalancer);
+                    AddLoadBalancer(key, loadBalancer);
                 }
                 balancer = loadBalancer;
                 return balancer;
             }
             balancer = await _factory.Get(downstream, config);
-            AddLoadBalancer(downstream.LoadBalancerKey, balancer);
+            AddLoadBalancer(key, balancer);
             return balancer;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="downstream"></param>
+        /// <param name="config"></param>
+        /// <returns></returns>
+        public async Task Remove(DownstreamProvider downstream, ServiceProviderConfiguration config)
+        {
+            string key = CreateKey(downstream, config);
+
+            _loadBalancers.TryRemove(key,out var _);
+
+            await Task.CompletedTask;
+        }
+
+        #region private
 
         /// <summary>
         /// 
@@ -56,5 +72,12 @@ namespace Blade.LoadBalancer
         {
             _loadBalancers.AddOrUpdate(key, loadBalancer, (x, y) => loadBalancer);
         }
+
+        private string CreateKey(DownstreamProvider downstream, ServiceProviderConfiguration configuration)
+        {
+            return $"{downstream.ServiceName}|{configuration.Host}:{configuration.Port}";
+        }
+
+        #endregion
     }
 }

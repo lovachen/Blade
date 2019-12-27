@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Blade.Configuration
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class InternalConfiguration
     {
         public InternalConfiguration()

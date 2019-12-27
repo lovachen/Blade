@@ -1,4 +1,5 @@
-﻿using Blade.Values;
+﻿using Blade.Configuration;
+using Blade.Values;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,6 +16,26 @@ namespace Blade.ServiceDiscovery.Providers
         /// 获取服务地址列表
         /// </summary>
         /// <returns></returns>
-        Task<List<Service>> GetServices();
+        Task<List<Service>> GetServices(ServiceDiscoveryConfiguration config);
+
+        /// <summary>
+        /// 启动监听
+        /// </summary>
+        /// <param name="config"></param>
+        /// <returns></returns>
+        Task AddListenerAsync(ServiceDiscoveryConfiguration config);
+
+        /// <summary>
+        /// 移除监听
+        /// </summary>
+        /// <param name="config"></param>
+        /// <returns></returns>
+        Task RemoveListnerAsync(ServiceDiscoveryConfiguration config);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        Task ClearListnerAsync();
     }
 }

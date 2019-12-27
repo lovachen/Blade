@@ -1,5 +1,6 @@
 ﻿using Blade.Configuration;
 using Blade.ServiceDiscovery;
+using Blade.ServiceDiscovery.Providers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,11 +13,11 @@ namespace Blade.LoadBalancer
     /// </summary>
     public class LoadBalancerFactory : ILoadBalancerFactory
     {
-        private readonly IServiceDiscoveryProviderFactory _serviceProviderFactory;
+        private readonly IServiceDiscoveryProvider _serviceDiscoveryProvider;
 
-        public LoadBalancerFactory(IServiceDiscoveryProviderFactory serviceDiscoveryProviderFactory)
+        public LoadBalancerFactory(IServiceDiscoveryProvider serviceDiscoveryProvider)
         {
-            _serviceProviderFactory = serviceDiscoveryProviderFactory;
+            _serviceDiscoveryProvider = serviceDiscoveryProvider;
         }
 
 
@@ -27,10 +28,9 @@ namespace Blade.LoadBalancer
         /// <param name="config"></param>
         /// <returns></returns>
         public async Task<ILoadBalancer> Get(DownstreamProvider downstream, ServiceProviderConfiguration config)
-        { 
-            var serviceProvider = _serviceProviderFactory.Get(config, downstream);
-
-            var services = await serviceProvider.GetServices();
+        {
+            var cfg = new ServiceDiscoveryConfiguration(config.Host, config.Port, config.Token, downstream.ServiceName);
+            var services = await _serviceDiscoveryProvider.GetServices(cfg);
 
             switch (downstream.LoadBalancerOptions?.Type)
             {
@@ -38,7 +38,7 @@ namespace Blade.LoadBalancer
                     return new LeastConnection(services);
                 default:
                     return new NoLoadBalancer(services);
-            } 
+            }
         }
     }
 }

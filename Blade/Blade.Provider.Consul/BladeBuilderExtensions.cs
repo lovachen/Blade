@@ -4,6 +4,8 @@
     using Blade.ServiceDiscovery;
     using Blade.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection;
+    using Blade.Provider.Consul.Failover;
+    using Blade.ServiceDiscovery.Providers;
 
     public static class BladeBuilderExtensions
     {
@@ -13,9 +15,10 @@
         /// <param name="builder"></param>
         /// <returns></returns>
         public static IBladeBuilder AddConsul(this IBladeBuilder builder)
-        {
-            builder.Services.AddSingleton<ServiceDiscoveryFinderDelegate>(ConsulProviderFactory.Get);
+        { 
             builder.Services.AddSingleton<IConsulClientFactory, ConsulClientFactory>();
+            builder.Services.AddSingleton<ILocalProcessor, LocalProcessor>();
+            builder.Services.AddSingleton<IServiceDiscoveryProvider, Consul>();
 
             return builder;
         }
