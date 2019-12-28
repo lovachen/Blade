@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{9DCBDAB6-D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{05A7748F-6E10-4FDE-B067-932AB54E2599}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Grpc.Blade", "Blade\Grpc.Blade.csproj", "{11568A71-195B-42DE-BC96-EFDA6EDE38E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blade.Grpc", "Blade\Blade.Grpc.csproj", "{11568A71-195B-42DE-BC96-EFDA6EDE38E9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "api.process", "api.process\api.process.csproj", "{D3842549-0BD4-4B5A-BC60-EE900A52BB7A}"
 EndProject
@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blade.XUnitTest", "Blade.XU
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "grpc.user", "grpc.user\grpc.user.csproj", "{1A69B655-D38B-45EA-BEF7-3BD044A029FC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Grpc.Blade.Provider.Consul", "Blade.Provider.Consul\Grpc.Blade.Provider.Consul.csproj", "{F60AE6D2-24F0-4C48-AFBD-D953CC20F31B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blade.Grpc.Provider.Consul", "Blade.Provider.Consul\Blade.Grpc.Provider.Consul.csproj", "{F60AE6D2-24F0-4C48-AFBD-D953CC20F31B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

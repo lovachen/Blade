@@ -1,12 +1,15 @@
-﻿namespace Grpc.Blade.Provider.Consul
+﻿namespace Blade.Grpc.Provider.Consul
 {
-    using Grpc.Blade.Provider.Consul;
-    using Grpc.Blade.ServiceDiscovery;
-    using Grpc.Blade.DependencyInjection;
+    using Blade.Grpc.Provider.Consul;
+    using Blade.Grpc.ServiceDiscovery;
+    using Blade.Grpc.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection;
-    using Grpc.Blade.Provider.Consul.Failover;
-    using Grpc.Blade.ServiceDiscovery.Providers;
+    using Blade.Grpc.Provider.Consul.Failover;
+    using Blade.Grpc.ServiceDiscovery.Providers;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public static class BladeBuilderExtensions
     {
         /// <summary>

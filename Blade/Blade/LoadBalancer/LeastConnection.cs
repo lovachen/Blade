@@ -1,13 +1,13 @@
-﻿using Grpc.Blade.Configuration;
-using Grpc.Blade.Configuration.File;
-using Grpc.Blade.Values;
+﻿using Blade.Grpc.Configuration;
+using Blade.Grpc.Configuration.File;
+using Blade.Grpc.Values;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Grpc.Blade.LoadBalancer
+namespace Blade.Grpc.LoadBalancer
 {
     /// <summary>
     /// 最小连接负载均衡

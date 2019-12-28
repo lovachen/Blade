@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Blade.Grpc;
 using grpc.user;
+using Blade.Grpc;
 using Grpc.Net.Client;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,7 +17,7 @@ namespace api.process.Controllers
     [ApiController]
     public class DefaultController : ControllerBase
     { 
-        private Blade.Grpc.IBladeGrpcFactory _bladeGrpcFactory;
+        private IBladeGrpcFactory _bladeGrpcFactory;
         public DefaultController(IBladeGrpcFactory bladeGrpcFactory)
         {
 

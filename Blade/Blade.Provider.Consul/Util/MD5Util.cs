@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Grpc.Blade.Provider.Consul.Util
+namespace Blade.Grpc.Provider.Consul.Util
 {
    internal class MD5Util
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Grpc.Blade.Configuration.File
+namespace Blade.Grpc.Configuration.File
 {
     /// <summary>
     /// 

@@ -1,5 +1,6 @@
-﻿using Blade.Grpc;
+﻿ 
 using grpc.user;
+using Blade.Grpc.Profile;
 using System;
 using System.Collections.Generic;
 using System.Linq;

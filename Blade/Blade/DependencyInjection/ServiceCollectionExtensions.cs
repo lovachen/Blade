@@ -1,4 +1,4 @@
-﻿namespace Grpc.Blade.DependencyInjection
+﻿namespace Blade.Grpc.DependencyInjection
 {
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;

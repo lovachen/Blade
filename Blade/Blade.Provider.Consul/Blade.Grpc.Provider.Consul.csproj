@@ -5,14 +5,14 @@
     <Authors>cts</Authors>
     <Description>配合Blade 为业务逻辑层 提供Grpc管道</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageProjectUrl>https://github.com/lovachen/Blade/tree/master/Blade/Grpc.Blade.Provider.Consul</PackageProjectUrl>
-    <PackageId>Grpc.Grpc.Blade.Provider.Consul</PackageId>
+    <PackageProjectUrl>https://github.com/lovachen/Blade/tree/master/Blade/Blade.Grpc.Provider.Consul</PackageProjectUrl>
+    <PackageId>Grpc.Blade.Grpc.Provider.Consul</PackageId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>
-    <DocumentationFile>Grpc.Blade.Provider.Consul.xml</DocumentationFile>
+    <DocumentationFile>Blade.Grpc.Provider.Consul.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Blade\Grpc.Blade.csproj" />
+    <ProjectReference Include="..\Blade\Blade.Grpc.csproj" />
   </ItemGroup>
 
 </Project>

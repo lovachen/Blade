@@ -1,9 +1,9 @@
-﻿using Grpc.Blade.Values;
+﻿using Blade.Grpc.Values;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Grpc.Blade.LoadBalancer
+namespace Blade.Grpc.LoadBalancer
 {
     /// <summary>
     /// 

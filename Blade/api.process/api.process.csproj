@@ -16,8 +16,8 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\Blade.Provider.Consul\Grpc.Blade.Provider.Consul.csproj" />
-    <ProjectReference Include="..\Blade\Grpc.Blade.csproj" />
+    <ProjectReference Include="..\Blade.Provider.Consul\Blade.Grpc.Provider.Consul.csproj" />
+    <ProjectReference Include="..\Blade\Blade.Grpc.csproj" />
   </ItemGroup>
 
 

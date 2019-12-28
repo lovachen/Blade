@@ -4,6 +4,11 @@
         <name>Blade.Grpc.Provider.Consul</name>
     </assembly>
     <members>
+        <member name="T:Blade.Grpc.Provider.Consul.BladeBuilderExtensions">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="M:Blade.Grpc.Provider.Consul.BladeBuilderExtensions.AddConsul(Blade.Grpc.DependencyInjection.IBladeBuilder)">
             <summary>
             注册Consul

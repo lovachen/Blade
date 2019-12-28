@@ -9,10 +9,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Blade.Provider.Consul;
-using Blade.DependencyInjection;
+using Microsoft.Extensions.Logging; 
 using grpc.user;
+using Blade.Grpc.DependencyInjection;
+using Blade.Grpc.Provider.Consul;
 
 namespace api.process
 {

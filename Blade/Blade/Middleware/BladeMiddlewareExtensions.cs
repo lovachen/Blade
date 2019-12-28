@@ -1,11 +1,11 @@
-﻿using Grpc.Blade;
-using Grpc.Blade.Configuration;
-using Grpc.Blade.Configuration.Create;
-using Grpc.Blade.Configuration.File;
-using Grpc.Blade.LoadBalancer;
-using Grpc.Blade.Middleware;
-using Grpc.Blade.ServiceDiscovery.Providers;
-using Grpc.Blade.Values;
+﻿using Blade.Grpc;
+using Blade.Grpc.Configuration;
+using Blade.Grpc.Configuration.Create;
+using Blade.Grpc.Configuration.File;
+using Blade.Grpc.LoadBalancer;
+using Blade.Grpc.Middleware;
+using Blade.Grpc.ServiceDiscovery.Providers;
+using Blade.Grpc.Values;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 

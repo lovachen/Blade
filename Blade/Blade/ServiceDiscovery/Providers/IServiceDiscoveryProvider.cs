@@ -1,11 +1,11 @@
-﻿using Grpc.Blade.Configuration;
-using Grpc.Blade.Values;
+﻿using Blade.Grpc.Configuration;
+using Blade.Grpc.Values;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Grpc.Blade.ServiceDiscovery.Providers
+namespace Blade.Grpc.ServiceDiscovery.Providers
 {
     /// <summary>
     /// 服务发现提供者

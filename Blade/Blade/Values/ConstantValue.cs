@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Grpc.Blade.Values
+namespace Blade.Grpc.Values
 {
     internal class ConstantValue
     {
         /// <summary>
         /// 
         /// </summary>
-        public const string CHANNEL_ITEMS = "Grpc.Blade.CHANNEL.ITEMS";
+        public const string CHANNEL_ITEMS = "Blade.Grpc.CHANNEL.ITEMS";
     }
 }

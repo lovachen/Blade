@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Grpc.Blade.Provider.Consul
+namespace Blade.Grpc.Provider.Consul
 {
     /// <summary>
     /// 获取 Consul Client 工厂

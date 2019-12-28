@@ -1,9 +1,9 @@
-﻿using Grpc.Blade.Values;
+﻿using Blade.Grpc.Values;
 using Grpc.Core;
 using Grpc.Net.Client;
 using System.Threading.Tasks;
 
-namespace Grpc.Blade
+namespace Blade.Grpc
 {
     public interface IBladeGrpcFactory
     {

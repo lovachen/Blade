@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Grpc.Blade.Values
+namespace Blade.Grpc.Values
 {
     /// <summary>
     /// 服务地址

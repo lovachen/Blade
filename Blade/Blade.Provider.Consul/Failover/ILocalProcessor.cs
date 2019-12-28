@@ -1,10 +1,10 @@
-﻿using Grpc.Blade.Values;
+﻿using Blade.Grpc.Values;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Grpc.Blade.Provider.Consul.Failover
+namespace Blade.Grpc.Provider.Consul.Failover
 {
     /// <summary>
     /// 

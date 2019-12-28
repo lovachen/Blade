@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Grpc.Blade.DependencyInjection
+namespace Blade.Grpc.DependencyInjection
 {
     public interface IBladeBuilder
     {

@@ -1,8 +1,8 @@
-﻿using Grpc.Blade;
-using Grpc.Blade.Profile;
+﻿using Blade.Grpc;
+using Blade.Grpc.Profile;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Grpc.Blade.DependencyInjection
+namespace Blade.Grpc.DependencyInjection
 {
     public static class BladeBuilderExtensions
     {

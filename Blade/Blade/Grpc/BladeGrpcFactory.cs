@@ -1,7 +1,7 @@
-﻿using Grpc.Blade.Configuration.Create;
-using Grpc.Blade.LoadBalancer;
-using Grpc.Blade.Profile;
-using Grpc.Blade.Values;
+﻿using Blade.Grpc.Configuration.Create;
+using Blade.Grpc.LoadBalancer;
+using Blade.Grpc.Profile;
+using Blade.Grpc.Values;
 using Grpc.Core;
 using Grpc.Net.Client;
 using Microsoft.AspNetCore.Http;
@@ -11,7 +11,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Grpc.Blade
+namespace Blade.Grpc
 {
     /// <summary>
     /// 

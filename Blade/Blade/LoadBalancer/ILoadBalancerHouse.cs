@@ -1,10 +1,10 @@
-﻿using Grpc.Blade.Configuration;
+﻿using Blade.Grpc.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Grpc.Blade.LoadBalancer
+namespace Blade.Grpc.LoadBalancer
 {
     public interface ILoadBalancerHouse
     {

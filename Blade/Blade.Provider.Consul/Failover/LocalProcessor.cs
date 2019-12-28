@@ -1,4 +1,4 @@
-﻿using Grpc.Blade.Values;
+﻿using Blade.Grpc.Values;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Concurrent;
@@ -10,7 +10,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Grpc.Blade.Provider.Consul.Failover
+namespace Blade.Grpc.Provider.Consul.Failover
 {
     public class LocalProcessor : ILocalProcessor
     {

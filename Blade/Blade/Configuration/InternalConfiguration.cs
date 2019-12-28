@@ -1,9 +1,9 @@
-﻿using Grpc.Blade.Configuration.File;
+﻿using Blade.Grpc.Configuration.File;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Grpc.Blade.Configuration
+namespace Blade.Grpc.Configuration
 {
     /// <summary>
     /// 

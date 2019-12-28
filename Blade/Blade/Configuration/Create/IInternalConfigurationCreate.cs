@@ -1,6 +1,6 @@
-﻿using Grpc.Blade.Configuration.File;
+﻿using Blade.Grpc.Configuration.File;
 
-namespace Grpc.Blade.Configuration.Create
+namespace Blade.Grpc.Configuration.Create
 {
     /// <summary>
     /// 

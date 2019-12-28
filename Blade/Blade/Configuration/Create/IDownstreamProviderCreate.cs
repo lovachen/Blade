@@ -1,7 +1,7 @@
-﻿using Grpc.Blade.Configuration.File;
+﻿using Blade.Grpc.Configuration.File;
 using System.Collections.Generic;
 
-namespace Grpc.Blade.Configuration.Create
+namespace Blade.Grpc.Configuration.Create
 {
     /// <summary>
     /// 
