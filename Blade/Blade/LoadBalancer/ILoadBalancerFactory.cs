@@ -1,10 +1,10 @@
-﻿using Blade.Configuration;
+﻿using Grpc.Blade.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Blade.LoadBalancer
+namespace Grpc.Blade.LoadBalancer
 {
     internal interface ILoadBalancerFactory
     {

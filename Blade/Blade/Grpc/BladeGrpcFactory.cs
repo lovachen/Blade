@@ -1,21 +1,17 @@
-﻿using Blade.Configuration.Create;
-using Blade.Configuration.File;
-using Blade.Grpc;
-using Blade.LoadBalancer;
-using Blade.Values;
+﻿using Grpc.Blade.Configuration.Create;
+using Grpc.Blade.LoadBalancer;
+using Grpc.Blade.Profile;
+using Grpc.Blade.Values;
 using Grpc.Core;
 using Grpc.Net.Client;
-using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Http;
-using System.Linq;
 
-namespace Blade.Grpc
+namespace Grpc.Blade
 {
     /// <summary>
     /// 

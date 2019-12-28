@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-namespace Blade.DependencyInjection
+﻿namespace Grpc.Blade.DependencyInjection
 {
-    using System.Text;
-    using Blade.Grpc;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
 

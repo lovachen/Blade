@@ -2,6 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>cts</Authors>
+    <Description>asp.net core 微服务应用中，在业务逻辑层 通过grpc 与下游通信，此项通过Consul 构建Grpc管道</Description>
+    <PackageProjectUrl>https://github.com/lovachen/Blade</PackageProjectUrl>
+    <PackageId>Grpc.Blade</PackageId>
   </PropertyGroup>
 
   <ItemGroup>

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Blade.Configuration.File
+namespace Grpc.Blade.Configuration.File
 {
     public class FileGlobalConfiguration
     {

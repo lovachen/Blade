@@ -1,8 +1,8 @@
-﻿using Blade.Configuration.Create;
-using Blade.Configuration.File;
-using Blade.Grpc;
-using Blade.LoadBalancer;
-namespace Blade.DependencyInjection
+﻿using Grpc.Blade.Configuration.Create;
+using Grpc.Blade.Configuration.File;
+using Grpc.Blade;
+using Grpc.Blade.LoadBalancer;
+namespace Grpc.Blade.DependencyInjection
 { 
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Configuration;

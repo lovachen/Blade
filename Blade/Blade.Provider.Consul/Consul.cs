@@ -1,8 +1,8 @@
-﻿using Blade.Configuration;
-using Blade.Provider.Consul.Failover;
-using Blade.Provider.Consul.Util;
-using Blade.ServiceDiscovery.Providers;
-using Blade.Values;
+﻿using Grpc.Blade.Configuration;
+using Grpc.Blade.Provider.Consul.Failover;
+using Grpc.Blade.Provider.Consul.Util;
+using Grpc.Blade.ServiceDiscovery.Providers;
+using Grpc.Blade.Values;
 using Consul;
 using Microsoft.Extensions.Logging;
 using System;
@@ -12,7 +12,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Blade.Provider.Consul
+namespace Grpc.Blade.Provider.Consul
 {
     public class Consul : IServiceDiscoveryProvider, IDisposable
     {

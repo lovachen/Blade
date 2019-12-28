@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Blade.Configuration
+namespace Grpc.Blade.Configuration
 {
     /// <summary>
     /// 

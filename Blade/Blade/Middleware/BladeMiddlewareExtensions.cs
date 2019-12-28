@@ -1,17 +1,13 @@
-﻿using Blade.Middleware;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Grpc.Blade;
+using Grpc.Blade.Configuration;
+using Grpc.Blade.Configuration.Create;
+using Grpc.Blade.Configuration.File;
+using Grpc.Blade.LoadBalancer;
+using Grpc.Blade.Middleware;
+using Grpc.Blade.ServiceDiscovery.Providers;
+using Grpc.Blade.Values;
 using Microsoft.Extensions.DependencyInjection;
-using Blade.Configuration.File;
-using Blade.Configuration.Create;
-using Blade.ServiceDiscovery.Providers;
-using Blade.Configuration;
-using Blade.LoadBalancer;
-using Blade.Grpc;
-using Blade.Values;
+using Microsoft.Extensions.Options;
 
 namespace Microsoft.AspNetCore.Builder
 {

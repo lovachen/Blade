@@ -2,7 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 
-namespace Blade.Grpc
+namespace Grpc.Blade.Profile
 {
     /// <summary>
     /// 继承此类 并启用 AddGrpcProfile

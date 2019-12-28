@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Blade.Values
+namespace Grpc.Blade.Values
 {
     /// <summary>
     /// 服务

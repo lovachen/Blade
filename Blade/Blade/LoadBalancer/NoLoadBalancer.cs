@@ -1,13 +1,13 @@
-﻿using Blade.Configuration;
-using Blade.Configuration.File;
-using Blade.Values;
+﻿using Grpc.Blade.Configuration;
+using Grpc.Blade.Configuration.File;
+using Grpc.Blade.Values;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Blade.LoadBalancer
+namespace Grpc.Blade.LoadBalancer
 {
     public class NoLoadBalancer : ILoadBalancer
     {

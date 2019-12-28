@@ -1,0 +1,185 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Grpc.Grpc.Blade.Provider.Consul</name>
+    </assembly>
+    <members>
+        <member name="M:Grpc.Blade.Provider.Consul.BladeBuilderExtensions.AddConsul(Grpc.Blade.DependencyInjection.IBladeBuilder)">
+            <summary>
+            注册Consul
+            </summary>
+            <param name="builder"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Grpc.Blade.Provider.Consul.Consul.GetServices(Grpc.Blade.Configuration.ServiceDiscoveryConfiguration)">
+            <summary>
+            
+            </summary>
+            <param name="config"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Grpc.Blade.Provider.Consul.Consul.AddListener(Grpc.Blade.Configuration.ServiceDiscoveryConfiguration)">
+            <summary>
+            
+            </summary>
+            <param name="config"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Grpc.Blade.Provider.Consul.Consul.Dispose">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Grpc.Blade.Provider.Consul.Consul.ClearListner">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Grpc.Blade.Provider.Consul.Consul.RemoveListner(Grpc.Blade.Configuration.ServiceDiscoveryConfiguration)">
+            <summary>
+            移除监听
+            </summary>
+            <param name="config"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Grpc.Blade.Provider.Consul.Consul.GetServices(Consul.IConsulClient,Grpc.Blade.Provider.Consul.ConsulRegistryConfiguration)">
+            <summary>
+            获取服务
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Grpc.Blade.Provider.Consul.Consul.PollingAsync(System.Object)">
+            <summary>
+            轮询请求获取Consul服务
+            MD5校验如果更改则通知回调
+            </summary>
+            <param name="info"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Grpc.Blade.Provider.Consul.Consul.ClientGetServices(Consul.IConsulClient,Grpc.Blade.Provider.Consul.ConsulRegistryConfiguration)">
+            <summary>
+            
+            </summary>
+            <param name="consul"></param>
+            <param name="config"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Grpc.Blade.Provider.Consul.Consul.Compare(System.Collections.Generic.List{Grpc.Blade.Values.Service},System.Collections.Generic.List{Grpc.Blade.Values.Service})">
+            <summary>
+            验证结果是否一致
+            </summary>
+            <param name="local"></param>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Grpc.Blade.Provider.Consul.ConsulClientFactory.Get(Grpc.Blade.Provider.Consul.ConsulRegistryConfiguration)">
+            <summary>
+            
+            </summary>
+            <param name="config"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Grpc.Blade.Provider.Consul.ConsulRegistryConfiguration">
+            <summary>
+            Consul 注册配置
+            </summary>
+        </member>
+        <member name="M:Grpc.Blade.Provider.Consul.Failover.ILocalProcessor.GetConfigAsync(System.String,System.Int32,System.String)">
+            <summary>
+            获取配置文件内容
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Grpc.Blade.Provider.Consul.Failover.ILocalProcessor.SaveConfigAsync(System.String,System.Int32,System.String,System.Collections.Generic.List{Grpc.Blade.Values.Service})">
+            <summary>
+            存储配置文件内容
+            </summary>
+            <param name="dataId"></param>
+            <param name="group"></param>
+            <param name="tenant"></param>
+            <param name="config"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Grpc.Blade.Provider.Consul.Failover.ILocalProcessor.RemoveConfigAsync(System.String,System.Int32,System.String)">
+            <summary>
+            移除配置本地存储值
+            </summary>
+            <param name="dataId"></param>
+            <param name="group"></param>
+            <param name="tenant"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Grpc.Blade.Provider.Consul.Failover.LocalProcessor.#ctor(Microsoft.Extensions.Logging.ILoggerFactory)">
+            <summary>
+            
+            </summary>
+            <param name="loggerFactory"></param>
+        </member>
+        <member name="M:Grpc.Blade.Provider.Consul.Failover.LocalProcessor.GetConfigAsync(System.String,System.Int32,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="host"></param>
+            <param name="port"></param>
+            <param name="serviceName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Grpc.Blade.Provider.Consul.Failover.LocalProcessor.RemoveConfigAsync(System.String,System.Int32,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="host"></param>
+            <param name="port"></param>
+            <param name="serviceName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Grpc.Blade.Provider.Consul.Failover.LocalProcessor.SaveConfigAsync(System.String,System.Int32,System.String,System.Collections.Generic.List{Grpc.Blade.Values.Service})">
+            <summary>
+            
+            </summary>
+            <param name="host"></param>
+            <param name="port"></param>
+            <param name="serviceName"></param>
+            <param name="config"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Grpc.Blade.Provider.Consul.Failover.LocalProcessor.GetFilePath(System.String,System.Int32,System.String)">
+            <summary>
+            获取配置文件目录
+            </summary>
+            <param name="host"></param>
+            <param name="port"></param>
+            <param name="serviceName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Grpc.Blade.Provider.Consul.Failover.LocalProcessor.GetCacheKey(System.String,System.Int32,System.String)">
+            <summary>
+            获取缓存的key
+            </summary>
+            <param name="dataId"></param>
+            <param name="group"></param>
+            <param name="serviceName"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Grpc.Blade.Provider.Consul.IConsulClientFactory">
+            <summary>
+            获取 Consul Client 工厂
+            </summary>
+        </member>
+        <member name="M:Grpc.Blade.Provider.Consul.IConsulClientFactory.Get(Grpc.Blade.Provider.Consul.ConsulRegistryConfiguration)">
+            <summary>
+            
+            </summary>
+            <param name="config"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Grpc.Blade.Provider.Consul.Util.MD5Util.GetMD5(System.String)">
+            <summary>
+            获取MD5
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

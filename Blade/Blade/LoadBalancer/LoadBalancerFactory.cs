@@ -1,12 +1,12 @@
-﻿using Blade.Configuration;
-using Blade.ServiceDiscovery;
-using Blade.ServiceDiscovery.Providers;
+﻿using Grpc.Blade.Configuration;
+using Grpc.Blade.ServiceDiscovery;
+using Grpc.Blade.ServiceDiscovery.Providers;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Blade.LoadBalancer
+namespace Grpc.Blade.LoadBalancer
 {
     /// <summary>
     /// 

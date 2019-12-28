@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Blade.Provider.Consul
+namespace Grpc.Blade.Provider.Consul
 {
     /// <summary>
     /// Consul 注册配置
