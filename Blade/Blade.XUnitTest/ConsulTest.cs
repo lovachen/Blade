@@ -22,7 +22,7 @@ namespace Blade.XUnitTest
            var consulClientFactory =  ServiceProvider.GetService<IConsulClientFactory>();
            var consul = ServiceProvider.GetService<IServiceDiscoveryProvider>(); 
 
-            var res =  consul.GetServices().Result;
+            var res =  consul.GetServices(new Configuration.ServiceDiscoveryConfiguration("192.168.0.109",8500,"","grpc.user")).Result;
             Assert.NotNull(res);
             foreach (var item in res)
             {

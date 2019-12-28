@@ -11,7 +11,7 @@ namespace Blade.LoadBalancer
     /// <summary>
     /// 
     /// </summary>
-    public class LoadBalancerFactory : ILoadBalancerFactory
+    internal class LoadBalancerFactory : ILoadBalancerFactory
     {
         private readonly IServiceDiscoveryProvider _serviceDiscoveryProvider;
 
@@ -32,13 +32,11 @@ namespace Blade.LoadBalancer
             var cfg = new ServiceDiscoveryConfiguration(config.Host, config.Port, config.Token, downstream.ServiceName);
             var services = await _serviceDiscoveryProvider.GetServices(cfg);
 
-            switch (downstream.LoadBalancerOptions?.Type)
+            return (downstream.LoadBalancerOptions?.Type) switch
             {
-                case nameof(LeastConnection):
-                    return new LeastConnection(services);
-                default:
-                    return new NoLoadBalancer(services);
-            }
+                nameof(LeastConnection) => new LeastConnection(services),
+                _ => new NoLoadBalancer(services),
+            };
         }
     }
 }

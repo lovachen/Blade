@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Blade.Values
 {
-    public class ConstantValue
+    internal class ConstantValue
     {
         /// <summary>
         /// 

@@ -29,6 +29,7 @@ namespace Microsoft.AspNetCore.Builder
             return app;
         }
 
+        #region private
 
         /// <summary>
         /// 监听json配置文件更改
@@ -56,7 +57,6 @@ namespace Microsoft.AspNetCore.Builder
             }
         }
 
-
         private static void StartListner(IApplicationBuilder builder, IServiceDiscoveryProvider discoveryProvider, FileConfiguration fileConfiguration)
         {
             var loadBalancerHouse = builder.ApplicationServices.GetService<ILoadBalancerHouse>();
@@ -83,5 +83,6 @@ namespace Microsoft.AspNetCore.Builder
             }
         }
 
+        #endregion
     }
 }

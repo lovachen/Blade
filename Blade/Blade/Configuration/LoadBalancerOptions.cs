@@ -12,8 +12,14 @@ namespace Blade.Configuration
             Key = key; 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string Type { get; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string Key { get; }
 
     }

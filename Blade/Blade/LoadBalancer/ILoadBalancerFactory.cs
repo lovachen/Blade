@@ -6,8 +6,14 @@ using System.Threading.Tasks;
 
 namespace Blade.LoadBalancer
 {
-    public interface ILoadBalancerFactory
+    internal interface ILoadBalancerFactory
     {
+        /// <summary>
+        /// 获取
+        /// </summary>
+        /// <param name="provider"></param>
+        /// <param name="config"></param>
+        /// <returns></returns>
         Task<ILoadBalancer> Get(DownstreamProvider provider, ServiceProviderConfiguration config);
     }
 }

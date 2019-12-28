@@ -25,8 +25,10 @@ namespace Blade.Configuration.Create
         ///
         public void AddOrReplace(FileConfiguration fileConfiguration)
         {
-            InternalConfiguration internalConfiguration = new InternalConfiguration();
-            internalConfiguration.GlobalConfiguration = fileConfiguration.GlobalConfiguration;
+            InternalConfiguration internalConfiguration = new InternalConfiguration
+            {
+                GlobalConfiguration = fileConfiguration.GlobalConfiguration
+            };
             AddOrReplace(internalConfiguration);
         }
 

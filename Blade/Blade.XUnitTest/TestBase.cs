@@ -44,12 +44,9 @@
 
             services.AddSingleton<ConsulRegistryConfiguration>(config);
             services.AddSingleton<IBladeGrpcFactory, BladeGrpcFactory>();
-            services.AddSingleton<ILoadBalancerHouse, LoadBalancerHouse>();
-            services.AddSingleton<ILoadBalancerFactory, LoadBalancerFactory>();
-            services.AddSingleton<IDownstreamProviderCreate, DownstreamProviderCreate>();
-            services.AddSingleton<IDownstreamKeyCreator, DownstreamKeyCreator>();
-            services.AddSingleton<ServiceDiscoveryFinderDelegate>(ConsulProviderFactory.Get);
-            services.AddSingleton<IServiceDiscoveryProviderFactory, ServiceDiscoveryProviderFactory>();
+            //services.AddSingleton<ILoadBalancerHouse, LoadBalancerHouse>();
+            //services.AddSingleton<ILoadBalancerFactory, LoadBalancerFactory>();
+            services.AddSingleton<IDownstreamProviderCreate, DownstreamProviderCreate>(); 
             services.AddSingleton<IServiceProviderConfigurationCreator, ServiceProviderConfigurationCreator>();
             ServiceProvider = services.BuildServiceProvider();
         }

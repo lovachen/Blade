@@ -6,6 +6,9 @@ using System.Text;
 
 namespace Blade.Configuration.Create
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class DownstreamProviderCreate : IDownstreamProviderCreate
     {
       

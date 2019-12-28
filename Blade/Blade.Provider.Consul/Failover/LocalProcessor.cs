@@ -17,7 +17,7 @@ namespace Blade.Provider.Consul.Failover
         private readonly static ReaderWriterLockSlim writerLockSlim = new ReaderWriterLockSlim();
         private const string CONFIG_BASE_DIR = "consul-config";
         private readonly static ConcurrentDictionary<string, List<Service>> _cache = new ConcurrentDictionary<string, List<Service>>();
-        private ILogger _logger;
+        private readonly ILogger _logger;
 
         /// <summary>
         /// 
@@ -28,15 +28,20 @@ namespace Blade.Provider.Consul.Failover
             _logger = loggerFactory.CreateLogger<ILocalProcessor>();
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="host"></param>
+        /// <param name="port"></param>
+        /// <param name="serviceName"></param>
+        /// <returns></returns>
         public async Task<List<Service>> GetConfigAsync(string host, int port, string serviceName)
         {
-            List<Service> services = null;
             try
-            {
+            { 
                 string config = String.Empty;
                 string key = GetCacheKey(host, port, serviceName);
-                if (!_cache.TryGetValue(key, out services))
+                if (!_cache.TryGetValue(key, out var services))
                 {
                     string file_dir = GetFilePath(host, port, serviceName);
                     var file = new FileInfo(file_dir + host);
@@ -49,7 +54,7 @@ namespace Blade.Provider.Consul.Failover
             }
             catch (Exception ex)
             {
-                _logger.LogError($"读取本地存储配置错误，描述=${ex.Message}");
+                _logger.LogError($"读取本地存储配置错误，host:{host},port:{port},servicename:{serviceName},描述=${ex.Message}");
                 return null;
             }
         }
@@ -68,7 +73,7 @@ namespace Blade.Provider.Consul.Failover
                 writerLockSlim.EnterWriteLock();
                 string key = GetCacheKey(host, port, serviceName);
                 //首次移除
-                _cache.Remove(key, out List<Service> _);
+                _cache.Remove(key, out var _);
 
                 string file_dir = GetFilePath(host, port, serviceName);
                 var file = new FileInfo(file_dir);
@@ -76,15 +81,16 @@ namespace Blade.Provider.Consul.Failover
                 if (file.Exists)
                     File.Delete(file.FullName);
                 //再次移除
-                _cache.Remove(key, out List<Service> _);
+                _cache.Remove(key, out var _);
             }
             catch (Exception ex)
             {
-                _logger.LogError($"移除配置时错误，描述={ex.Message}");
+                _logger.LogError($"移除配置时错误，host:{host},port:{port},servicename:{serviceName},描述={ex.Message}");
             }
             finally
             {
-                writerLockSlim.ExitWriteLock();
+                if (writerLockSlim.IsWriteLockHeld)
+                    writerLockSlim.ExitWriteLock();
             }
             await Task.CompletedTask;
         }
@@ -106,7 +112,7 @@ namespace Blade.Provider.Consul.Failover
                     return;
                 }
                 var config = JsonSerializer.Serialize(services);
-                 
+
                 writerLockSlim.EnterWriteLock();
 
                 string key = GetCacheKey(host, port, serviceName);
@@ -126,7 +132,7 @@ namespace Blade.Provider.Consul.Failover
             }
             catch (Exception ex)
             {
-                _logger.LogError($"写入配置时错误，描述={ex.Message}");
+                _logger.LogError($"写入配置文件时错误，host:{host},port:{port},servicename:{serviceName},描述={ex.Message}");
             }
             finally
             {

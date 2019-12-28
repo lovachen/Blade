@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Blade.Configuration.File
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class FileConfiguration
     {
         public FileConfiguration()

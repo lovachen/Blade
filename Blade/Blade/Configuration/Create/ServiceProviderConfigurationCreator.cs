@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Blade.Configuration.Create
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class ServiceProviderConfigurationCreator : IServiceProviderConfigurationCreator
     {
 
@@ -18,7 +21,11 @@ namespace Blade.Configuration.Create
             return Build(globalConfiguration);
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="globalConfiguration"></param>
+        /// <returns></returns>
         private ServiceProviderConfiguration Build(FileGlobalConfiguration globalConfiguration)
         {
             var port = globalConfiguration?.ServiceDiscoveryProvider?.Port ?? 0;

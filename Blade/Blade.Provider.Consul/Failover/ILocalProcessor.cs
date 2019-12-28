@@ -14,7 +14,6 @@ namespace Blade.Provider.Consul.Failover
         /// <returns></returns>
         Task<List<Service>> GetConfigAsync(string host, int port, string serviceName);
 
-
         /// <summary>
         /// 存储配置文件内容
         /// </summary>

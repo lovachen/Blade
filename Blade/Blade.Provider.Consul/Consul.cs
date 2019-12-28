@@ -14,13 +14,13 @@ using System.Threading.Tasks;
 
 namespace Blade.Provider.Consul
 {
-    internal class Consul : IServiceDiscoveryProvider, IDisposable
+    public class Consul : IServiceDiscoveryProvider, IDisposable
     {
         private readonly static Dictionary<string, Timer> listeners = new Dictionary<string, Timer>();
         private readonly IConsulClientFactory _factory;
         private readonly ILocalProcessor _localProcessor;
         private const string VersionPrefix = "version-";
-        private ILogger _logger;
+        private readonly ILogger _logger;
 
         public Consul(IConsulClientFactory clientFactory,
             ILoggerFactory loggerFactory,
@@ -38,10 +38,8 @@ namespace Blade.Provider.Consul
         /// <returns></returns>
         public Task<List<Service>> GetServices(ServiceDiscoveryConfiguration config)
         {
-            var _config = new ConsulRegistryConfiguration(config.Host, config.Port, config.ServiceName, config.Token);
-            var _consul = _factory.Get(_config);
-
-            return GetServices(_consul, _config);
+            var cfg = new ConsulRegistryConfiguration(config.Host, config.Port, config.ServiceName, config.Token);
+            return GetServices(_factory.Get(cfg), cfg);
         }
 
 
@@ -55,7 +53,7 @@ namespace Blade.Provider.Consul
             string key = CreateKey(config);
 
             //如果已添加过监听
-            if (listeners.ContainsKey(key.ToLower()))
+            if (listeners.ContainsKey(key))
             {
                 return;
             }
@@ -67,7 +65,7 @@ namespace Blade.Provider.Consul
                 await PollingAsync(o);
                 cfg.Polling = false;
             }, config, 0, config.PollingInterval);
-             
+
         }
 
         /// <summary>
@@ -87,7 +85,7 @@ namespace Blade.Provider.Consul
         {
             foreach (var timer in listeners)
                 timer.Value?.Dispose();
-            listeners.Clear(); 
+            listeners.Clear();
         }
 
         /// <summary>
@@ -102,14 +100,14 @@ namespace Blade.Provider.Consul
             if (listeners.ContainsKey(key))
             {
                 listeners[key]?.Dispose();
-            } 
+            }
         }
 
         #region private
 
         private bool IsValid(ServiceEntry serviceEntry)
         {
-            if (string.IsNullOrEmpty(serviceEntry.Service.Address) || serviceEntry.Service.Address.Contains("http://") || serviceEntry.Service.Address.Contains("https://") || serviceEntry.Service.Port <= 0)
+            if (String.IsNullOrEmpty(serviceEntry.Service.Address) || serviceEntry.Service.Address.Contains("http://") || serviceEntry.Service.Address.Contains("https://") || serviceEntry.Service.Port <= 0)
             {
                 return false;
             }
@@ -155,7 +153,8 @@ namespace Blade.Provider.Consul
         }
 
         /// <summary>
-        /// 
+        /// 轮询请求获取Consul服务
+        /// MD5校验如果更改则通知回调
         /// </summary>
         /// <param name="info"></param>
         /// <returns></returns>
@@ -170,11 +169,15 @@ namespace Blade.Provider.Consul
             var services = await ClientGetServices(consul, config);
             if (!Compare(localServices, services))
             {
-                cfg.Callback.ForEach(ac =>
+                try
                 {
-                    if (ac != null)
-                        ac();
-                });
+                    if (cfg.Callback != null)
+                        cfg.Callback.ForEach(ac=>ac());
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError($"轮询Consul通知回调错误，host:{cfg.Host},port:{cfg.Port},servicename:{cfg.ServiceName}描述:{ex.Message}");
+                }
             }
         }
 
@@ -186,17 +189,25 @@ namespace Blade.Provider.Consul
         /// <returns></returns>
         private async Task<List<Service>> ClientGetServices(IConsulClient consul, ConsulRegistryConfiguration config)
         {
-            var services = new List<Service>();
-            var queryResult = await consul.Health.Service(config.KeyOfServiceInConsul, string.Empty, true);
-
-            foreach (var serviceEntry in queryResult.Response)
+            try
             {
-                if (IsValid(serviceEntry))
+                var services = new List<Service>();
+                var queryResult = await consul.Health.Service(config.KeyOfServiceInConsul, string.Empty, true);
+
+                foreach (var serviceEntry in queryResult.Response)
                 {
-                    services.Add(BuildService(serviceEntry));
+                    if (IsValid(serviceEntry))
+                    {
+                        services.Add(BuildService(serviceEntry));
+                    }
                 }
+                return services;
             }
-            return services;
+            catch (Exception ex)
+            {
+                _logger.LogError($"请求Consul 获取服务时错误，host:{config.Host},port:{config.Port},servicename:{config.KeyOfServiceInConsul}描述:{ex.Message}");
+                throw;
+            }
         }
 
         /// <summary>
@@ -209,8 +220,8 @@ namespace Blade.Provider.Consul
         {
             if (local == null || services == null) return false;
 
-           return MD5Util.GetMD5(JsonSerializer.Serialize(local))
-                .Equals(MD5Util.GetMD5(JsonSerializer.Serialize(services)));
+            return MD5Util.GetMD5(JsonSerializer.Serialize(local))
+                 .Equals(MD5Util.GetMD5(JsonSerializer.Serialize(services)));
         }
 
         private string CreateKey(ServiceDiscoveryConfiguration config)

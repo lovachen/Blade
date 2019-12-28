@@ -4,6 +4,12 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <DocumentationFile>Blade.Provider.Consul.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Consul" Version="0.7.2.6" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.0" />

@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Blade.Configuration.Create
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface IServiceProviderConfigurationCreator
     {
         /// <summary>

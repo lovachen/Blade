@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections;
+﻿using Grpc.Core;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Blade.Grpc
 {
-    public abstract class  GrpcProfile: ConcurrentDictionary<string,string>
-    { 
-
+    /// <summary>
+    /// 继承此类 并启用 AddGrpcProfile
+    /// </summary>
+    public abstract class  GrpcProfile: Dictionary<string,string>
+    {  
         /// <summary>
         /// 
         /// </summary>
@@ -16,10 +16,9 @@ namespace Blade.Grpc
         /// <param name="serviceName"></param>
         /// <returns></returns>
 
-        public GrpcProfile Add<T>(string serviceName)
+        public void Add<T>(string serviceName) where T :ClientBase
         {
-            this.AddOrUpdate(typeof(T).FullName, serviceName, (k, v) => serviceName);
-            return this;
+            this.TryAdd(typeof(T).FullName, serviceName);
         }
 
     }

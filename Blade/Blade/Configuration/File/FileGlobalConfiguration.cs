@@ -6,6 +6,9 @@ namespace Blade.Configuration.File
 {
     public class FileGlobalConfiguration
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public FileGlobalConfiguration()
         {
             ServiceDiscoveryProvider = new FileServiceDiscoveryProvider();

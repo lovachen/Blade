@@ -33,7 +33,7 @@ namespace Blade.ServiceDiscovery.Providers
         void RemoveListner(ServiceDiscoveryConfiguration config);
 
         /// <summary>
-        /// 
+        /// 清理所有监听
         /// </summary>
         /// <returns></returns>
         void ClearListner();

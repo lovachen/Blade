@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Blade.LoadBalancer
 {
-    public class LoadBalancerHouse : ILoadBalancerHouse
+    internal class LoadBalancerHouse : ILoadBalancerHouse
     {
         private readonly ILoadBalancerFactory _factory;
         private readonly ConcurrentDictionary<string, ILoadBalancer> _loadBalancers;
@@ -30,12 +30,10 @@ namespace Blade.LoadBalancer
             ILoadBalancer balancer;
             string key = CreateKey(downstream, config);
             if (_loadBalancers.TryGetValue(key, out var loadBalancer))
-            {
-                loadBalancer = _loadBalancers[key];
+            { 
                 if (downstream.LoadBalancerOptions.Type != loadBalancer.GetType().Name)
                 {
                     loadBalancer = await _factory.Get(downstream, config);
-                    balancer = loadBalancer;
                     AddLoadBalancer(key, loadBalancer);
                 }
                 balancer = loadBalancer;

@@ -14,14 +14,14 @@ namespace Blade.LoadBalancer
     public interface ILoadBalancer
     {
         /// <summary>
-        /// 
+        /// 租界主机
         /// </summary>
         /// <param name="provider"></param>
         /// <returns></returns>
         Task<ServiceHostAndPort> Lease(ServiceProviderConfiguration config);
 
         /// <summary>
-        /// 
+        /// 替换
         /// </summary>
         /// <param name="hostAndPort"></param>
         void Release(ServiceHostAndPort hostAndPort);

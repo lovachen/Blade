@@ -14,9 +14,14 @@ namespace Blade.Configuration
             LoadBalancerOptions = loadBalancerOptions; 
         }
          
-
+        /// <summary>
+        /// 
+        /// </summary>
         public LoadBalancerOptions LoadBalancerOptions { get; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string ServiceName { get; set; }
     }
 }

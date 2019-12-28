@@ -14,7 +14,7 @@ namespace Blade.LoadBalancer
     /// </summary>
     public class LeastConnection : ILoadBalancer
     {
-        private List<Service> _services;
+        private readonly List<Service> _services;
         private readonly List<Lease> _leases; 
         private static readonly object _syncLock = new object();
 
@@ -27,7 +27,7 @@ namespace Blade.LoadBalancer
         public Task<ServiceHostAndPort> Lease(ServiceProviderConfiguration config)
         {
             if (_services == null || _services.Count == 0)
-                throw new ArgumentNullException($"LeastConnection serverices 为空");
+                throw new ArgumentNullException($"LeastConnection Lease serverices 为空");
 
             lock (_syncLock)
             {

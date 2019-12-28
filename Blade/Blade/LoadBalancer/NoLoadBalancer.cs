@@ -11,7 +11,7 @@ namespace Blade.LoadBalancer
 {
     public class NoLoadBalancer : ILoadBalancer
     {
-        private List<Service> _services;
+        private readonly List<Service> _services;
 
 
         public NoLoadBalancer(List<Service> services)
@@ -26,12 +26,10 @@ namespace Blade.LoadBalancer
         /// <returns></returns>
         public async Task<ServiceHostAndPort> Lease(ServiceProviderConfiguration config)
         {
-            if (_services.Count == 0)
-                throw new Exception($"NoLoadBalancer 构建时 List<Service> 不存在值");
-
-            var service = await Task.FromResult(_services.FirstOrDefault());
-
-            return service.HostAndPort;
+            if (_services == null || _services.Count == 0)
+                throw new Exception($"Lease NoLoadBalancer 构建时 List<Service> 不存在值");
+             
+            return await Task.FromResult(_services.FirstOrDefault().HostAndPort);
         }
 
         /// <summary>

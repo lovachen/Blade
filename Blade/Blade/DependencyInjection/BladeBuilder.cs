@@ -1,11 +1,9 @@
 ﻿using Blade.Configuration.Create;
 using Blade.Configuration.File;
 using Blade.Grpc;
-using Blade.Infrastructure;
 using Blade.LoadBalancer;
 namespace Blade.DependencyInjection
-{
-    using Blade.ServiceDiscovery;
+{ 
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -27,7 +25,6 @@ namespace Blade.DependencyInjection
             Services.Configure<FileConfiguration>(configurationRoot);
 
 
-            Services.TryAddSingleton<IBladeFactory, BladeFactory>(); 
             Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             Services.TryAddSingleton<ILoadBalancerHouse, LoadBalancerHouse>();
             Services.TryAddSingleton<IBladeGrpcFactory, BladeGrpcFactory>();

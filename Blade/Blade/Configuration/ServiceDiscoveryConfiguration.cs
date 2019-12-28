@@ -6,6 +6,13 @@ namespace Blade.Configuration
 {
     public class ServiceDiscoveryConfiguration
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="host"></param>
+        /// <param name="port"></param>
+        /// <param name="token"></param>
+        /// <param name="serviceName"></param>
 
         public ServiceDiscoveryConfiguration(string host, int port, string token,string serviceName)
         {
@@ -15,6 +22,14 @@ namespace Blade.Configuration
             ServiceName = serviceName;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="host"></param>
+        /// <param name="port"></param>
+        /// <param name="token"></param>
+        /// <param name="pollingInterval"></param>
+        /// <param name="serviceName"></param>
         public ServiceDiscoveryConfiguration(string host, int port, string token, int pollingInterval, string serviceName)
         {
             Host = host;

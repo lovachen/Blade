@@ -24,12 +24,12 @@ namespace Blade.Grpc
     {
         private readonly ConcurrentDictionary<string, GrpcChannel> _grpcChannels;
 
-        private IServiceProvider _serviceProvider;
-        private IHttpContextAccessor _httpContextAccessor;
-        private IDownstreamProviderCreate _downstreamProviderCreate;
-        private IInternalConfigurationCreate _internalConfigurationCreate;
-        private ILoadBalancerHouse _loadBalancerHouse;
-        private IServiceProviderConfigurationCreator _serviceProviderConfigurationCreator;
+        private readonly IServiceProvider _serviceProvider;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IInternalConfigurationCreate _internalConfigurationCreate;
+        private readonly ILoadBalancerHouse _loadBalancerHouse;
+        private readonly IServiceProviderConfigurationCreator _serviceProviderConfigurationCreator;
+        private readonly IDownstreamProviderCreate _downstreamProviderCreate;
 
         public BladeGrpcFactory(IDownstreamProviderCreate downstreamProviderCreate,
             IInternalConfigurationCreate internalConfigurationCreate,
@@ -90,11 +90,14 @@ namespace Blade.Grpc
         private async Task<GrpcChannel> Build(string serviceName)
         {
             var _fileConfiguration = _internalConfigurationCreate.Get();
+
             var downstream = _downstreamProviderCreate.Create(_fileConfiguration, serviceName);
+
             var serviceProvider = _serviceProviderConfigurationCreator.Create(_fileConfiguration.GlobalConfiguration);
-            var file = _fileConfiguration.GlobalConfiguration.ServiceDiscoveryProvider;
+
             var loadBalancer = await _loadBalancerHouse.Get(downstream, serviceProvider);
             var hostAndPort = await loadBalancer.Lease(serviceProvider);
+
             var channel = CreateChannel(hostAndPort);
             UpdateItems(loadBalancer, hostAndPort);
             return channel;
@@ -117,7 +120,7 @@ namespace Blade.Grpc
         }
 
         private void UpdateItems(ILoadBalancer loadBalancer, ServiceHostAndPort hostAndPort)
-        {
+        {  
             Dictionary<string, LoadBalancerHttpItems> dic;
             string key = CreateKey(hostAndPort);
             if (_httpContextAccessor.HttpContext.Items.ContainsKey(ConstantValue.CHANNEL_ITEMS))
