@@ -6,7 +6,7 @@
     <Description>配合Blade 为业务逻辑层 提供Grpc管道</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/lovachen/Blade/tree/master/Blade/Blade.Grpc.Provider.Consul</PackageProjectUrl>
-    <PackageId>Grpc.Blade.Grpc.Provider.Consul</PackageId>
+    <PackageId>Blade.Grpc.Provider.Consul</PackageId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
