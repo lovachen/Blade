@@ -8,26 +8,44 @@ using grpc.user;
 using Grpc.Net.Client;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace api.process.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class DefaultController : ControllerBase
-    {
+    { 
         private Blade.Grpc.IBladeGrpcFactory _bladeGrpcFactory;
-
         public DefaultController(IBladeGrpcFactory bladeGrpcFactory)
         {
-            _bladeGrpcFactory = bladeGrpcFactory;
+
+            _bladeGrpcFactory = bladeGrpcFactory; 
+
         }
+        //private Greeter.GreeterClient greeterClient;
+        //private User.UserClient userClient;
+
+        //public DefaultController(Greeter.GreeterClient greeter,
+        //    User.UserClient user)
+        //{
+        //    greeterClient = greeter;
+        //    userClient = user;  
+        //}
+        static ILoggerFactory loggerFactory = LoggerFactory.Create(logging =>
+        {
+            logging.AddConsole();
+            logging.SetMinimumLevel(LogLevel.Debug);
+        });
+        static GrpcChannel channel = GrpcChannel.ForAddress("http://192.168.0.121:7001/", new GrpcChannelOptions() { LoggerFactory = loggerFactory });
+
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
         [HttpGet("say")]
-        public IActionResult Say()
+        public async Task<IActionResult> Say()
         {
             //var httpClientHandler = new HttpClientHandler();
             //// Return `true` to allow certificates that are untrusted/invalid
@@ -35,29 +53,49 @@ namespace api.process.Controllers
             //    HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
             //var httpClient = new HttpClient(httpClientHandler);
 
-            AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
             //var channel = GrpcChannel.ForAddress("http://192.168.0.121:7001/", new GrpcChannelOptions { HttpClient = httpClient });
-            var channel = GrpcChannel.ForAddress("http://192.168.0.105:7001/");
+
+
+
+            //System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
+
+            //stopwatch.Start();
+             
 
             var greeterClient = new Greeter.GreeterClient(channel);
-            var res = greeterClient.SayHello(new HelloRequest()
+            var userClient = new User.UserClient(channel);
+            //for (int i = 0; i < 1000; i++)
+            //{
+
+            //var res = await greeterClient.SayHelloAsync(new HelloRequest()
+            //    {
+            //        Name = "李斯"
+            //    }); ;
+            //    var res2 = await userClient.GetUserAsync(new UserRequest()
+            //    {
+            //        Id = "1"
+            //    });
+            //}
+            var res = await greeterClient.SayHelloAsync(new HelloRequest()
             {
                 Name = "李斯"
             }); ;
-            var userClient = new User.UserClient(channel);
-            var res2 = userClient.GetUser(new UserRequest()
+            var res2 = await userClient.GetUserAsync(new UserRequest()
             {
                 Id = "1"
-            }); ;
+            });
+            //stopwatch.Stop();
+
+            //return Ok();
             return Ok(new { success = true, data = res, dta = res2 });
         }
 
         [HttpGet("user")]
-        public IActionResult GetUser()
+        public async Task<IActionResult> GetUser()
         {
-           var channel = _bladeGrpcFactory.Create<User.UserClient>().Result;
+            var channel = _bladeGrpcFactory.Create<User.UserClient>().Result;
             var userClient = new User.UserClient(channel);
-            var res2 = userClient.GetUser(new UserRequest()
+            var res2 = await userClient.GetUserAsync(new UserRequest()
             {
                 Id = "1"
             });
@@ -65,6 +103,6 @@ namespace api.process.Controllers
             return Ok(new { dta = res2 });
         }
 
-         
+
     }
 }

@@ -50,14 +50,14 @@ namespace Blade.Provider.Consul
         /// </summary>
         /// <param name="config"></param>
         /// <returns></returns>
-        public async Task AddListenerAsync(ServiceDiscoveryConfiguration config)
+        public void AddListener(ServiceDiscoveryConfiguration config)
         {
             string key = CreateKey(config);
 
             //如果已添加过监听
             if (listeners.ContainsKey(key.ToLower()))
             {
-                await Task.CompletedTask;
+                return;
             }
             Timer timer = new Timer(async o =>
             {
@@ -67,8 +67,7 @@ namespace Blade.Provider.Consul
                 await PollingAsync(o);
                 cfg.Polling = false;
             }, config, 0, config.PollingInterval);
-
-            await Task.CompletedTask;
+             
         }
 
         /// <summary>
@@ -84,12 +83,11 @@ namespace Blade.Provider.Consul
         /// 
         /// </summary>
         /// <returns></returns>
-        public async Task ClearListnerAsync()
+        public void ClearListner()
         {
             foreach (var timer in listeners)
                 timer.Value?.Dispose();
-            listeners.Clear();
-            await Task.CompletedTask;
+            listeners.Clear(); 
         }
 
         /// <summary>
@@ -97,15 +95,14 @@ namespace Blade.Provider.Consul
         /// </summary>
         /// <param name="config"></param>
         /// <returns></returns>
-        public async Task RemoveListnerAsync(ServiceDiscoveryConfiguration config)
+        public void RemoveListner(ServiceDiscoveryConfiguration config)
         {
             string key = CreateKey(config);
 
             if (listeners.ContainsKey(key))
             {
                 listeners[key]?.Dispose();
-            }
-            await Task.CompletedTask;
+            } 
         }
 
         #region private

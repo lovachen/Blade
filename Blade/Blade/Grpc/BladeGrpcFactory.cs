@@ -72,6 +72,19 @@ namespace Blade.Grpc
             throw new Exception($"{nameof(T)}并未注册GrpcProfile");
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="hostAndPort"></param>
+        /// <returns></returns>
+        public async Task Remove(ServiceHostAndPort hostAndPort)
+        {
+            string key = CreateKey(hostAndPort);
+            _grpcChannels.TryRemove(key, out var _);
+            await Task.CompletedTask;
+        }
+
         #region private
 
         private async Task<GrpcChannel> Build(string serviceName)
@@ -89,7 +102,18 @@ namespace Blade.Grpc
 
         private GrpcChannel CreateChannel(ServiceHostAndPort hostAndPort)
         {
-            return GrpcChannel.ForAddress($"http://{hostAndPort.DownstreamHost}:{hostAndPort.DownstreamPort}");
+            string key = CreateKey(hostAndPort);
+
+            if (_grpcChannels.TryGetValue(key, out GrpcChannel _channel))
+            {
+                return _channel;
+            }
+            else
+            {
+                var channel = GrpcChannel.ForAddress($"http://{hostAndPort.DownstreamHost}:{hostAndPort.DownstreamPort}");
+                _grpcChannels.AddOrUpdate(key, channel, (k, v) => channel);
+                return channel;
+            }
         }
 
         private void UpdateItems(ILoadBalancer loadBalancer, ServiceHostAndPort hostAndPort)
@@ -115,6 +139,7 @@ namespace Blade.Grpc
         {
             return $"{hostAndPort.DownstreamHost}:{hostAndPort.DownstreamPort}";
         }
+
 
 
         #endregion

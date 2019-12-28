@@ -1,4 +1,5 @@
-﻿using Grpc.Core;
+﻿using Blade.Values;
+using Grpc.Core;
 using Grpc.Net.Client;
 using System.Threading.Tasks;
 
@@ -19,5 +20,12 @@ namespace Blade.Grpc
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         Task<GrpcChannel> Create<T>() where T : ClientBase;
+
+        /// <summary>
+        /// 移除
+        /// </summary>
+        /// <param name="hostAndPort"></param>
+        /// <returns></returns>
+        Task Remove(ServiceHostAndPort hostAndPort);
     }
 }

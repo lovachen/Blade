@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Blade.Provider.Consul;
 using Blade.DependencyInjection;
+using grpc.user;
 
 namespace api.process
 {

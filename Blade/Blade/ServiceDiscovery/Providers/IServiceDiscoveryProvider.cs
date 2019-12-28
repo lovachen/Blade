@@ -23,19 +23,19 @@ namespace Blade.ServiceDiscovery.Providers
         /// </summary>
         /// <param name="config"></param>
         /// <returns></returns>
-        Task AddListenerAsync(ServiceDiscoveryConfiguration config);
+        void AddListener(ServiceDiscoveryConfiguration config);
 
         /// <summary>
         /// 移除监听
         /// </summary>
         /// <param name="config"></param>
         /// <returns></returns>
-        Task RemoveListnerAsync(ServiceDiscoveryConfiguration config);
+        void RemoveListner(ServiceDiscoveryConfiguration config);
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        Task ClearListnerAsync();
+        void ClearListner();
     }
 }

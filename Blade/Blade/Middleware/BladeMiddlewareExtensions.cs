@@ -10,6 +10,8 @@ using Blade.Configuration.Create;
 using Blade.ServiceDiscovery.Providers;
 using Blade.Configuration;
 using Blade.LoadBalancer;
+using Blade.Grpc;
+using Blade.Values;
 
 namespace Microsoft.AspNetCore.Builder
 {
@@ -40,10 +42,10 @@ namespace Microsoft.AspNetCore.Builder
 
             configurationCreate.AddOrReplace(fileConfig.CurrentValue);
 
-            fileConfig.OnChange(async config =>
+            fileConfig.OnChange(config =>
             {
-                await serviceDiscoveryProvider.ClearListnerAsync();
                 configurationCreate.AddOrReplace(config);
+                serviceDiscoveryProvider.ClearListner();
                 StartListner(builder, serviceDiscoveryProvider, config);
             });
 
@@ -58,6 +60,7 @@ namespace Microsoft.AspNetCore.Builder
         private static void StartListner(IApplicationBuilder builder, IServiceDiscoveryProvider discoveryProvider, FileConfiguration fileConfiguration)
         {
             var loadBalancerHouse = builder.ApplicationServices.GetService<ILoadBalancerHouse>();
+            var grpcFactory = builder.ApplicationServices.GetService<IBladeGrpcFactory>();
 
             var global = fileConfiguration.GlobalConfiguration;
             string host = global.ServiceDiscoveryProvider.Host;
@@ -68,10 +71,14 @@ namespace Microsoft.AspNetCore.Builder
             foreach (var item in fileConfiguration.GlobalConfiguration.Downstream)
             {
                 var config = new ServiceDiscoveryConfiguration(host, port, token, pollingInterval, item.ServiceName);
-                discoveryProvider.AddListenerAsync(config);
+                discoveryProvider.AddListener(config);
                 config.Callback.Add(() =>
                 {
                     loadBalancerHouse.Remove(new DownstreamProvider(config.ServiceName, null), new ServiceProviderConfiguration(config.Host, config.Port, config.Token));
+                });
+                config.Callback.Add(() =>
+                {
+                    grpcFactory.Remove(new ServiceHostAndPort(config.Host,config.Port));
                 });
             }
         }
