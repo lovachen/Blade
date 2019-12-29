@@ -35,6 +35,7 @@ Blade.Grpc 适用 asp.net core 3.1 或及以后的版本。
     } 
       
     ```
+    
     ```
     1. 通过 Consul 服务名称创建 GprcChanne 管道
       GrpcChannel channel =  _bladeGrpcFactory.Create(Consul 注册的 服务名称);
@@ -59,6 +60,26 @@ Blade.Grpc 适用 asp.net core 3.1 或及以后的版本。
       
       即可通过如下方式构建GrpcChannel管道
       GrpcChannel channel =  _bladeGrpcFactory.Create<Greeter.GreeterClient>();
-      
     ```
-  
+
+ 4.  添加 appsettings.json 配置
+    
+        ```
+          "BladeGrpc": {
+          "ServiceDiscoveryProvider": {
+            "Host": "192.168.0.109",
+            "Port": 8500,
+            "Listening": true,
+            "LoadBalancerOptions": {
+              "Type": "LeastConnection"
+            }
+          },
+          "Downstream": [
+            {
+              "ServiceName": "grpc.user"
+            }
+          ]
+        }
+
+       ```
+
