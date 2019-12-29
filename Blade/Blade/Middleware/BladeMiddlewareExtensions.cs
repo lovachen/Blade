@@ -47,7 +47,7 @@ namespace Microsoft.AspNetCore.Builder
             });
 
             //
-            if (fileConfig.CurrentValue.GlobalConfiguration.ServiceDiscoveryProvider.Listening)
+            if (fileConfig.CurrentValue.BladeGrpc.ServiceDiscoveryProvider.Listening)
             {
                 StartListner(builder, serviceDiscoveryProvider, fileConfig.CurrentValue);
             }
@@ -58,13 +58,13 @@ namespace Microsoft.AspNetCore.Builder
             var loadBalancerHouse = builder.ApplicationServices.GetService<ILoadBalancerHouse>();
             var grpcFactory = builder.ApplicationServices.GetService<IBladeGrpcFactory>();
 
-            var global = fileConfiguration.GlobalConfiguration;
+            var global = fileConfiguration.BladeGrpc;
             string host = global.ServiceDiscoveryProvider.Host;
             int port = global.ServiceDiscoveryProvider.Port;
             string token = global.ServiceDiscoveryProvider.Token;
             int pollingInterval = global.ServiceDiscoveryProvider.PollingInterval;
             if (pollingInterval == 0) pollingInterval = 100;
-            foreach (var item in fileConfiguration.GlobalConfiguration.Downstream)
+            foreach (var item in fileConfiguration.BladeGrpc.Downstream)
             {
                 var config = new ServiceDiscoveryConfiguration(host, port, token, pollingInterval, item.ServiceName);
                 discoveryProvider.AddListener(config);

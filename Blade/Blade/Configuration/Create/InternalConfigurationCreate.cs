@@ -27,7 +27,7 @@ namespace Blade.Grpc.Configuration.Create
         {
             InternalConfiguration internalConfiguration = new InternalConfiguration
             {
-                GlobalConfiguration = fileConfiguration.GlobalConfiguration
+                GlobalConfiguration = fileConfiguration.BladeGrpc
             };
             AddOrReplace(internalConfiguration);
         }

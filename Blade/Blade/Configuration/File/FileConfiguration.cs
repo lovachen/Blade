@@ -11,13 +11,13 @@ namespace Blade.Grpc.Configuration.File
     {
         public FileConfiguration()
         {
-            GlobalConfiguration = new FileGlobalConfiguration();
+            BladeGrpc = new FileGlobalConfiguration();
         }
 
         /// <summary>
         /// 
         /// </summary>
-        public FileGlobalConfiguration GlobalConfiguration { get; set; }
+        public FileGlobalConfiguration BladeGrpc { get; set; }
 
     }
 }

@@ -100,7 +100,7 @@ namespace api.process.Controllers
             {
                 Id = "1"
             });
-            System.Diagnostics.Debug.WriteLine("controller action结束");
+            System.Console.WriteLine(res2);
             return Ok(new { dta = res2 });
         }
 
