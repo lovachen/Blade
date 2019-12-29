@@ -63,7 +63,7 @@ namespace Microsoft.AspNetCore.Builder
             int port = global.ServiceDiscoveryProvider.Port;
             string token = global.ServiceDiscoveryProvider.Token;
             int pollingInterval = global.ServiceDiscoveryProvider.PollingInterval;
-            if (pollingInterval == 0) pollingInterval = 100;
+            if (pollingInterval == 0) pollingInterval = 1000;
             foreach (var item in fileConfiguration.BladeGrpc.Downstream)
             {
                 var config = new ServiceDiscoveryConfiguration(host, port, token, pollingInterval, item.ServiceName);
