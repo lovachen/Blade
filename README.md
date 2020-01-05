@@ -73,7 +73,7 @@ Blade.Grpc 适用 asp.net core 3.1 或及以后的版本。
             "PollingInterval":100, //论时间 ms ，默认100ms
           },
           "LoadBalancerOptions": {
-              "Type": "LeastConnection"  //负载均衡 轮询：RoundRobin，最小连接：LeastConnection
+              "Type": "RoundRobin"  //负载均衡 轮询：RoundRobin，最小连接：LeastConnection
           },
           "Downstream": [
             {
