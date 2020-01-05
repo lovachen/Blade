@@ -7,7 +7,7 @@
     <Description>asp.net core 微服务应用中，在业务逻辑层 通过grpc 与下游通信，此项通过Consul 构建Grpc管道</Description>
     <PackageProjectUrl>https://github.com/lovachen/Blade</PackageProjectUrl>
     <PackageId>Blade.Grpc</PackageId>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>

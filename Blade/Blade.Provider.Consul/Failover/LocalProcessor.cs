@@ -38,7 +38,7 @@ namespace Blade.Grpc.Provider.Consul.Failover
         public async Task<List<Service>> GetConfigAsync(string host, int port, string serviceName)
         {
             try
-            { 
+            {
                 string config = String.Empty;
                 string key = GetCacheKey(host, port, serviceName);
                 if (!_cache.TryGetValue(key, out var services))
@@ -153,9 +153,9 @@ namespace Blade.Grpc.Provider.Consul.Failover
         /// <returns></returns>
         private string GetFilePath(string host, int port, string serviceName)
         {
-            string file_dir = Path.Combine(Directory.GetCurrentDirectory(), CONFIG_BASE_DIR, port.ToString(), host);
+            string file_dir = Path.Combine(Directory.GetCurrentDirectory(), CONFIG_BASE_DIR, host, port.ToString());
             if (!String.IsNullOrEmpty(serviceName))
-                file_dir = Path.Combine(Directory.GetCurrentDirectory(), CONFIG_BASE_DIR, serviceName, port.ToString(), host);
+                file_dir = Path.Combine(Directory.GetCurrentDirectory(), CONFIG_BASE_DIR, host, port.ToString(), serviceName);
             return file_dir;
         }
 

@@ -68,19 +68,6 @@ namespace Blade.Grpc
             throw new Exception($"{nameof(T)}并未注册GrpcProfile");
         }
 
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="hostAndPort"></param>
-        /// <returns></returns>
-        public async Task Remove(ServiceHostAndPort hostAndPort)
-        {
-            string key = CreateKey(hostAndPort);
-            _grpcChannels.TryRemove(key, out var _);
-            await Task.CompletedTask;
-        }
-
         #region private
 
         private async Task<GrpcChannel> Build(string serviceName)

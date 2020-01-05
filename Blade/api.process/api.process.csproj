@@ -8,6 +8,9 @@
   <ItemGroup>
     <Protobuf Include="..\grpc.user\Protos\*.proto" GrpcServices="Service" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="consul-config\192.168.0.109\8500\grpc.user" />
+  </ItemGroup>
   
   <ItemGroup>
     <PackageReference Include="Consul" Version="0.7.2.6" />

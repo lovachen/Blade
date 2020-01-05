@@ -169,6 +169,7 @@ namespace Blade.Grpc.Provider.Consul
             var services = await ClientGetServices(consul, config);
             if (!Compare(localServices, services))
             {
+                await _localProcessor.SaveConfigAsync(config.Host, config.Port, config.KeyOfServiceInConsul, services);
                 try
                 {
                     if (cfg.Callback != null)

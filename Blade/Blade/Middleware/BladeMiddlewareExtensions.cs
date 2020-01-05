@@ -67,15 +67,11 @@ namespace Microsoft.AspNetCore.Builder
             foreach (var item in fileConfiguration.BladeGrpc.Downstream)
             {
                 var config = new ServiceDiscoveryConfiguration(host, port, token, pollingInterval, item.ServiceName);
-                discoveryProvider.AddListener(config);
                 config.Callback.Add(() =>
                 {
                     loadBalancerHouse.Remove(new DownstreamProvider(config.ServiceName, null), new ServiceProviderConfiguration(config.Host, config.Port, config.Token));
                 });
-                config.Callback.Add(() =>
-                {
-                    grpcFactory.Remove(new ServiceHostAndPort(config.Host,config.Port));
-                });
+                discoveryProvider.AddListener(config);
             }
         }
 

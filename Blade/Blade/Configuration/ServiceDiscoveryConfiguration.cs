@@ -54,6 +54,6 @@ namespace Blade.Grpc.Configuration
         /// <summary>
         /// 回调函数
         /// </summary>
-        public List<Action> Callback => new List<Action>();
+        public List<Action> Callback { get; } = new List<Action>();
     }
 }
