@@ -71,9 +71,9 @@ Blade.Grpc 适用 asp.net core 3.1 或及以后的版本。
             "Port": 8500,
             "Listening": true,  //长轮询方式,
             "PollingInterval":100, //论时间 ms ，默认100ms
-            "LoadBalancerOptions": {
+          },
+          "LoadBalancerOptions": {
               "Type": "LeastConnection"
-            }
           },
           "Downstream": [
             {
