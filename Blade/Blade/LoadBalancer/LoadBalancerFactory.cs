@@ -35,6 +35,7 @@ namespace Blade.Grpc.LoadBalancer
             return (downstream.LoadBalancerOptions?.Type) switch
             {
                 nameof(LeastConnection) => new LeastConnection(services),
+                nameof(RoundRobin)=>new RoundRobin(services),
                 _ => new NoLoadBalancer(services),
             };
         }

@@ -7,7 +7,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/lovachen/Blade/tree/master/Blade/Blade.Grpc.Provider.Consul</PackageProjectUrl>
     <PackageId>Blade.Grpc.Provider.Consul</PackageId>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
