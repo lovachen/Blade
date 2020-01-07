@@ -24,7 +24,7 @@ namespace Blade.Grpc.LoadBalancer
         /// </summary>
         /// <param name="config"></param>
         /// <returns></returns>
-        public async Task<ServiceHostAndPort> Lease(ServiceProviderConfiguration config)
+        public async Task<ServiceHostAndPort> Lease()
         {
             if (_services == null || _services.Count == 0)
                 throw new Exception($"Lease NoLoadBalancer 构建时 List<Service> 不存在值");

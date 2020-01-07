@@ -79,7 +79,7 @@ namespace Blade.Grpc
             var serviceProvider = _serviceProviderConfigurationCreator.Create(_fileConfiguration.GlobalConfiguration);
 
             var loadBalancer = await _loadBalancerHouse.Get(downstream, serviceProvider);
-            var hostAndPort = await loadBalancer.Lease(serviceProvider);
+            var hostAndPort = await loadBalancer.Lease();
 
             var channel = CreateChannel(hostAndPort);
             UpdateItems(loadBalancer, hostAndPort);

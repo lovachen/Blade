@@ -29,6 +29,6 @@ namespace Blade.Grpc.LoadBalancer
         /// <summary>
         /// 连接数
         /// </summary>
-        public int Connections { get; private set; }
+        public int Connections { get; internal set; }
     }
 }

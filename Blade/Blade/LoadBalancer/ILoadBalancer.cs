@@ -18,7 +18,7 @@ namespace Blade.Grpc.LoadBalancer
         /// </summary>
         /// <param name="provider"></param>
         /// <returns></returns>
-        Task<ServiceHostAndPort> Lease(ServiceProviderConfiguration config);
+        Task<ServiceHostAndPort> Lease();
 
         /// <summary>
         /// 替换

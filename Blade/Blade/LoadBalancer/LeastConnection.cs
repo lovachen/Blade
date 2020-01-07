@@ -2,6 +2,7 @@
 using Blade.Grpc.Configuration.File;
 using Blade.Grpc.Values;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,119 +15,50 @@ namespace Blade.Grpc.LoadBalancer
     /// </summary>
     public class LeastConnection : ILoadBalancer
     {
-        private readonly List<Service> _services;
-        private readonly List<Lease> _leases; 
         private static readonly object _syncLock = new object();
-
+        private readonly ConcurrentDictionary<string, Lease> keyValues = new ConcurrentDictionary<string, Lease>();
 
         public LeastConnection(List<Service> services)
         {
-            _services = services;
-            _leases = new List<Lease>();
+            services.ForEach(service =>
+            {
+                var lease = new Lease(service.HostAndPort, 0);
+                keyValues.AddOrUpdate(CreateKey(service.HostAndPort), lease, (k, v) => lease);
+            });
         }
-        public Task<ServiceHostAndPort> Lease(ServiceProviderConfiguration config)
+        public Task<ServiceHostAndPort> Lease()
         {
-            if (_services == null || _services.Count == 0)
+            if (keyValues == null || keyValues.Count == 0)
                 throw new ArgumentNullException($"LeastConnection Lease serverices 为空");
 
-            lock (_syncLock)
-            {
-                UpdateServices(_services);
-                var leaseWithLeastConnections = GetLeaseWithLeastConnections();
-                _leases.Remove(leaseWithLeastConnections);
+            var leaseWithLeastConnections = keyValues.Values.OrderBy(x => x.Connections).First();
 
-                leaseWithLeastConnections = AddConnection(leaseWithLeastConnections);
+            leaseWithLeastConnections.Connections++;
 
-                _leases.Add(leaseWithLeastConnections);
-                var hostAndPort = new ServiceHostAndPort(leaseWithLeastConnections.HostAndPort.DownstreamHost, leaseWithLeastConnections.HostAndPort.DownstreamPort);
-
-                return Task.FromResult(hostAndPort);
-            }
+            var hostAndPort = new ServiceHostAndPort(leaseWithLeastConnections.HostAndPort.DownstreamHost, leaseWithLeastConnections.HostAndPort.DownstreamPort);
+            return Task.FromResult(hostAndPort);
         }
 
         public void Release(ServiceHostAndPort hostAndPort)
         {
-            lock (_syncLock)
+            string key = CreateKey(hostAndPort);
+            if (keyValues.TryGetValue(CreateKey(hostAndPort), out var matchingLease))
             {
-                var matchingLease = _leases.FirstOrDefault(l => l.HostAndPort.DownstreamHost == hostAndPort.DownstreamHost
-                    && l.HostAndPort.DownstreamPort == hostAndPort.DownstreamPort);
-
-                if (matchingLease != null)
-                {
-                    var replacementLease = new Lease(hostAndPort, matchingLease.Connections - 1);
-
-                    _leases.Remove(matchingLease);
-
-                    _leases.Add(replacementLease);
-                }
+                matchingLease.Connections--; 
             }
         }
 
         #region private
 
-        public void UpdateServices(List<Service> services)
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="service"></param>
+        /// <returns></returns>
+        private string CreateKey(ServiceHostAndPort hostAndPort)
         {
-            if (_leases.Count == 0)
-            {
-                var leasesToRemove = new List<Lease>();
-
-                foreach (var lease in _leases)
-                {
-                    var match = _services.FirstOrDefault(s => s.HostAndPort.DownstreamHost == lease.HostAndPort.DownstreamHost
-                   && s.HostAndPort.DownstreamPort == lease.HostAndPort.DownstreamPort);
-                    if (match == null)
-                    {
-                        leasesToRemove.Add(lease);
-                    }
-                }
-                foreach (var lease in leasesToRemove)
-                {
-                    _leases.Remove(lease);
-                }
-
-                foreach (var service in _services)
-                {
-                    var exists = _leases.FirstOrDefault(s => s.HostAndPort.DownstreamHost == service.HostAndPort.DownstreamHost
-                     && s.HostAndPort.DownstreamPort == service.HostAndPort.DownstreamPort);
-                    if (exists == null)
-                    {
-                        _leases.Add(new Lease(service.HostAndPort, 0));
-                    }
-                }
-            }
-            else
-            {
-                foreach (var service in services)
-                {
-                    _leases.Add(new Lease(service.HostAndPort, 0));
-                }
-            }
-        }
-
-        private Lease GetLeaseWithLeastConnections()
-        {
-            Lease leaseWithLeastConnections = null;
-
-            for (var i = 0; i < _leases.Count; i++)
-            {
-                if (i == 0)
-                {
-                    leaseWithLeastConnections = _leases[i];
-                }
-                else
-                {
-                    if (_leases[i].Connections < leaseWithLeastConnections.Connections)
-                    {
-                        leaseWithLeastConnections = _leases[i];
-                    }
-                }
-            }
-            return leaseWithLeastConnections;
-        }
-
-        private Lease AddConnection(Lease lease)
-        {
-            return new Lease(lease.HostAndPort, lease.Connections + 1);
+            return $"{hostAndPort.DownstreamHost}:{hostAndPort.DownstreamPort}";
         }
 
         #endregion

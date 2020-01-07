@@ -28,7 +28,7 @@ namespace Blade.Grpc.LoadBalancer
         /// </summary>
         /// <param name="config"></param>
         /// <returns></returns>
-        public Task<ServiceHostAndPort> Lease(ServiceProviderConfiguration config)
+        public Task<ServiceHostAndPort> Lease()
         {
             lock (_syncLock)
             {
