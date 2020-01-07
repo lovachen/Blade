@@ -14,8 +14,7 @@ namespace Blade.Grpc.LoadBalancer
     /// 最小连接负载均衡
     /// </summary>
     public class LeastConnection : ILoadBalancer
-    {
-        private static readonly object _syncLock = new object();
+    { 
         private readonly ConcurrentDictionary<string, Lease> keyValues = new ConcurrentDictionary<string, Lease>();
 
         public LeastConnection(List<Service> services)
@@ -44,7 +43,7 @@ namespace Blade.Grpc.LoadBalancer
             string key = CreateKey(hostAndPort);
             if (keyValues.TryGetValue(CreateKey(hostAndPort), out var matchingLease))
             {
-                matchingLease.Connections--; 
+                matchingLease.Connections--;
             }
         }
 
